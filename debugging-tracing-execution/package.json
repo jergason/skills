@@ -1,0 +1,27 @@
+{
+  "name": "agent-debug-harness",
+  "version": "1.0.0",
+  "description": "Lightweight debug logging server for AI coding agents",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "bin": {
+    "agent-debug-harness": "./src/index.ts"
+  },
+  "keywords": [
+    "debug",
+    "logging",
+    "agent",
+    "ai",
+    "ndjson",
+    "cursor",
+    "claude"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}

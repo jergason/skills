@@ -19,7 +19,7 @@ bun run render.ts "graph LR
 A --> B --> C"
 ```
 
-**Important**: Use newlines between the header and nodes, not semicolons.
+Use newlines between the header and nodes, not semicolons.
 
 ## Supported Diagram Types
 
