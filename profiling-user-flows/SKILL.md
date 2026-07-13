@@ -35,7 +35,7 @@ Profiling Progress:
 
 Read `$ARGUMENTS` and determine:
 
-1. What user to login as. If not specified, use jamison+test2@test.droplet.io, password testtest.
+1. What user to login as.
 2. **Starting URL** — where to navigate. If not given, ask or use the current page.
 3. **Interaction steps** — the sequence of clicks, fills, waits that constitute the flow.
 4. **What "done" looks like** — text that appears, element that renders, network request that completes.
