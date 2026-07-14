@@ -63,8 +63,10 @@ This usually means you have churn against a moving target on `main`. Three mitig
 
 If a branch in your stack is checked out in another git worktree, `--update-refs` will not move it. The warning tells you which worktree owns it. Options:
 
-- Release the worktree (`git worktree remove <path>`) and re-run.
-- `cd` into that worktree and manually `git reset --hard <new-tip>` after the rebase finishes elsewhere — error-prone, avoid if you can.
+- Stop before pushing. The preflight in `SKILL.md` should detect this state before the rebase.
+- Preserve any work in that worktree, release the branch, and re-run the rewrite from a known-good state.
+
+Do not repair the skipped branch with `git reset --hard` or delete the worktree unless the user explicitly requests that cleanup and its work has been preserved.
 
 ## After all conflicts resolved
 

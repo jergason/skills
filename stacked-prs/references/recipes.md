@@ -51,12 +51,11 @@ git rebase --update-refs --onto B1 B2  # take (B2..B4] and replay onto B1
 bash scripts/stack-push.sh B1 B3 B4
 gh pr edit <B3-pr-number> --base B1
 
-# 4. Close the dropped PR and delete the branch
-gh pr close <B2-pr-number> --delete-branch
-git branch -D B2
+# 4. Close the dropped PR
+gh pr close <B2-pr-number>
 ```
 
-If B3 and B4 truly depended on B2's changes, dropping is the wrong move — instead fold B2's commits into B3 (see [Move a commit from one stack branch to another](#move-a-commit-from-one-stack-branch-to-another)).
+Preserve `B2` locally and remotely after closing the PR. Branch cleanup is a separate operation that requires an explicit user request. If B3 and B4 truly depended on B2's changes, dropping is the wrong move — instead fold B2's commits into B3 (see [Move a commit from one stack branch to another](#move-a-commit-from-one-stack-branch-to-another)).
 
 ## Split a PR mid-stack
 

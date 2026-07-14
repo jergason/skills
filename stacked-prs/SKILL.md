@@ -15,8 +15,9 @@ Use this for creating or maintaining dependent PR chains. The stack grows upward
 - `--update-refs` only moves local refs that exist and are not checked out in another worktree. Materialize every stack branch locally before a stack rebase.
 - After squash merge, use `git rebase --onto <new-base> <merged-branch> <tip>` while the merged branch still exists locally.
 - Push rewritten stack branches with `--force-with-lease`, never plain `--force`.
-- `--force-with-lease` only protects against changes you have not fetched — and every workflow here fetches first, which disarms it. The real safety invariant: before any rewrite, every stack branch must match or lead its origin twin (`git rev-list --count <branch>..origin/<branch>` prints 0).
+- Treat `--force-with-lease` as a final race detector, not proof that the rewrite is correct. Fetching changes its expected value, and background fetches can weaken an implicit lease. Prove the local and remote state before rewriting and inspect it again immediately before pushing. If branches are shared or the repository may fetch automatically, use an explicit expected remote SHA or stop for confirmation.
 - Never rewrite a mid-stack branch's history in isolation while branches above it still point at the old commits. Appending commits to a branch is safe; rewrites happen once, from the tip, with `--update-refs`.
+- Do not delete merged or removed branches automatically. Branch cleanup is outside the restacking workflow unless the user explicitly requests it.
 
 ## Runbook
 
@@ -34,6 +35,7 @@ Add a section to the PR's descriptions to help reviewers navigate the stack. It 
 - #1234
 - #1233 👈 this PR
 - #1232
+
 <!-- pr-stack:end -->
 ```
 
@@ -43,7 +45,7 @@ When updating `pr-stack` sections, preserve every PR already recorded as part of
 
 ### Adding, Updating, Merging, Maintaining Stacked PRs
 
-1. Check the worktree before rewriting history:
+1. Check the worktree before rewriting history. `git status --short` must produce no output; if it does, preserve the work and stop before rebasing:
    ```bash
    git status --short
    ```
@@ -68,23 +70,52 @@ When updating `pr-stack` sections, preserve every PR already recorded as part of
    - Add active PRs missing from the lineage in the position implied by the current base chain.
    - If no marked block exists yet, initialize the lineage from the active chain.
 
-5. Ensure each active stack branch exists locally and is not behind origin:
+5. Prove the preflight invariants before choosing or running a rewrite:
+   - Every active branch and every branch used as a rebase boundary exists locally.
+   - No relevant branch contains remote commits missing locally.
+   - Record the remote-tracking SHA for every branch that may be pushed so later fetches are visible.
+   - Each active local branch is an ancestor of the branch immediately above it.
+   - No branch expected to move is checked out in another worktree.
+
+   Useful evidence includes:
+
    ```bash
    git rev-parse --verify refs/heads/<branch> || git branch <branch> origin/<branch>
    git rev-list --count <branch>..origin/<branch>   # must print 0 for every branch
+   git rev-parse origin/<branch>                    # record before rewriting
+   git merge-base --is-ancestor <lower-branch> <upper-branch>
+   git worktree list --porcelain
    ```
-   A non-zero count means origin has commits the local branch lacks (a web-UI review suggestion, another machine, a teammate). Stop before any rewrite. If the local branch is strictly behind (`git rev-list --count origin/<branch>..<branch>` is also 0), fast-forward it with `git branch -f <branch> origin/<branch>` while it is not checked out, then run "Propagate changes from a lower PR" so the new commits flow up the stack. If the histories truly diverged, ask the user which side wins.
-6. Run the matching workflow below.
-7. Re-walk PR bases after the rebase. Retarget with `gh pr edit <num> --base <branch>` only if GitHub did not already do it.
-8. Push the stack:
+
+   A non-zero count means origin has commits the local branch lacks (a web-UI review suggestion, another machine, a teammate). A failed ancestry check can mean a lower branch grew without being propagated. Diagnose the observed state instead of mechanically continuing. If the histories truly diverged or the intended history is ambiguous, ask the user which side wins.
+
+6. Run the matching workflow below only when its assumptions match the observed repository state. The commands are examples of common stack shapes, not scripts to execute blindly.
+7. Before pushing, prove the post-rewrite invariants:
+   - The rebase completed successfully and every active branch moved as intended.
+   - Each active branch is still an ancestor of the branch immediately above it.
+   - The resulting PR bases will represent that same chain.
+   - No branch outside the intended active stack will be pushed.
+   - The remote-tracking refs still represent the remote state examined during preflight.
+
+   When the result is unclear, inspect the actual graph:
+
+   ```bash
+   git log --graph --decorate --oneline --all
+   ```
+
+   If an invariant fails, stop and diagnose it before changing PR bases or pushing.
+
+8. Re-walk PR bases after the rebase. Retarget with `gh pr edit <num> --base <branch>` only if GitHub did not already do it.
+9. Push the stack:
    ```bash
    bash scripts/stack-push.sh <B1> <B2> <B3>
    ```
-9. Update the marked stack block in every open PR in the active chain:
-   - Render the complete description lineage, not just the active PRs. GitHub supplies the merged and closed status in its UI; do not add status text or emoji.
-   - Put `👈 this PR` on the PR whose description is being updated and nowhere else.
-   - Replace only the content from `<!-- pr-stack:start -->` through `<!-- pr-stack:end -->`. Preserve the rest of the description.
-   - Do not edit descriptions of merged or closed PRs.
+10. Update the marked stack block in every open PR in the active chain:
+
+- Render the complete description lineage, not just the active PRs. GitHub supplies the merged and closed status in its UI; do not add status text or emoji.
+- Put `👈 this PR` on the PR whose description is being updated and nowhere else.
+- Replace only the content from `<!-- pr-stack:start -->` through `<!-- pr-stack:end -->`. Preserve the rest of the description.
+- Do not edit descriptions of merged or closed PRs.
 
 ## Common Workflows
 
@@ -129,7 +160,6 @@ git fetch origin
 git checkout <tip-of-remaining-stack>
 git rebase --update-refs origin/main
 bash scripts/stack-push.sh <remaining-branches-bottom-to-top>
-git branch -D <merged-branch>
 ```
 
 If the bottom PR was squash-merged:
@@ -139,10 +169,9 @@ git fetch origin
 git checkout <tip-of-remaining-stack>
 git rebase --update-refs --onto origin/main <merged-branch>
 bash scripts/stack-push.sh <remaining-branches-bottom-to-top>
-git branch -D <merged-branch>
 ```
 
-The merged branch must still exist locally for the `--onto` command.
+The merged branch must still exist locally for the `--onto` command. Preserve it after the restack too; cleanup is a separate, explicitly requested operation.
 
 If a middle PR merged, its changes landed on the _remote_ copy of its base branch: when `B2` merges, `origin/B1` moves forward but local `B1` does not. Bring local `B1` up to date before rebasing, and do not push it. For `B1 → B2 → B3 → B4` where `B2` merged:
 
@@ -154,10 +183,9 @@ git branch -f B1 origin/B1             # fast-forward local B1 to include B2's m
 git rebase --update-refs --onto B1 B2
 bash scripts/stack-push.sh B3 B4       # never push B1 — it already matches origin
 gh pr edit <B3-pr-number> --base B1    # only if GitHub did not retarget it
-git branch -D B2
 ```
 
-Rebasing onto a stale local `B1` and pushing it would rewind `origin/B1` and erase `B2`'s merged work from GitHub — quietly, because the fetch in step one makes `--force-with-lease` pass.
+Preserve `B2` after the restack. Rebasing onto a stale local `B1` and pushing it would rewind `origin/B1` and erase `B2`'s merged work from GitHub. The preflight state checks prevent that; an implicit lease alone is not sufficient evidence.
 
 ### Propagate changes from a lower PR
 
