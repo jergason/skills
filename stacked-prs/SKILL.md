@@ -5,11 +5,11 @@ description: Create and maintain stacked pull requests on GitHub using git & gh.
 
 # Stacked PRs
 
-Use this for creating or maintaining dependent PR chains: `B1 → B2 → B3`, where each PR's base is the branch below it. Do not use it for a single ordinary PR.
+Use this for creating or maintaining dependent PR chains. The stack grows upward from `main`: `main → B1 → B2 → B3`, where `B1` is the bottom PR and `B3` is the top or tip. Each PR targets the branch immediately below it. Adding a PR "on top" means branching from the current tip. Do not use this skill for a single ordinary PR.
 
 ## Core Rules
 
-- The GitHub PR base chain is the source of truth. Reconstruct it with `gh pr list --json number,headRefName,baseRefName,title,url,isDraft`.
+- The GitHub PR base chain is the source of truth for the current open stack. Existing `pr-stack` description blocks are the source of truth for historical stack membership. Never reconstruct a description solely from open PRs.
 - Do not `git pull` on stack branches. Use `git fetch origin`, then explicit rebase commands.
 - Prefer rebasing from the stack tip with `--update-refs`; intermediate local branch refs move with the rebase.
 - `--update-refs` only moves local refs that exist and are not checked out in another worktree. Materialize every stack branch locally before a stack rebase.
@@ -24,9 +24,7 @@ Use this for creating or maintaining dependent PR chains: `B1 → B2 → B3`, wh
 
 Use the `/create-pull-request` skill when creating each PR so the format broadly matches.
 
-Add some markdown to the PRs to help reviewers navigate the stack.
-
-It should be a list of PR numbers with a pointer to the current pr, like this:
+Add a section to the PR's descriptions to help reviewers navigate the stack. It should be a list of PR numbers with a pointer to the current pr, like this:
 
 ```markdown
 <!-- pr-stack:start -->
@@ -39,9 +37,9 @@ It should be a list of PR numbers with a pointer to the current pr, like this:
 <!-- pr-stack:end -->
 ```
 
-Do not add more descriptions to the markdown list. GitHub renders the PR numbers as the full titles, so extra description just makes it harder to read.
+Do not add more text or emojis to the markdown list. GitHub renders the PR numbers as the full titles, so extra content just makes it harder to read.
 
-When updating stack descriptions, preserve every PR already recorded as part of the stack, including merged and closed PRs. Keep entries in their original stack position. Add newly discovered PRs, but never remove an existing entry because it is no longer open or no longer appears in the current GitHub base chain
+When updating `pr-stack` sections, preserve every PR already recorded as part of the stack, including merged and closed PRs. Keep entries in their original stack position. Add newly discovered PRs, but don't remove an existing entry because it is no longer open or no longer appears in the current GitHub base chain.
 
 ### Adding, Updating, Merging, Maintaining Stacked PRs
 
@@ -53,15 +51,24 @@ When updating stack descriptions, preserve every PR already recorded as part of 
    ```bash
    git fetch origin
    gh pr list --author @me --state open --limit 200 \
-     --json number,headRefName,baseRefName,title,url,isDraft
+     --json number,headRefName,baseRefName,title,url,isDraft,body
    ```
    Drop `--author @me` if collaborators may own PRs in the chain.
 3. Walk the PR chain from the current or named branch:
    - Down: find the PR whose `headRefName` is the branch; its `baseRefName` is the next branch down.
    - Up: find PRs whose `baseRefName` is the branch; each matching `headRefName` is a child.
    - If one branch has multiple children, ask which child branch belongs in this stack.
-4. Produce an ordered branch list, bottom to top: `B1 B2 B3`.
-5. Ensure each stack branch exists locally and is not behind origin:
+4. Track two different ordered lists:
+   - **Active branch list:** the open branches found from the current GitHub base chain, bottom to top: `B1 B2 B3`. Use this list for rebasing and pushing.
+   - **Description lineage:** every PR historically recorded in the stack, including merged and closed PRs. Use this list only for PR descriptions.
+
+   Build the description lineage before rewriting any description:
+   - Read the content between `<!-- pr-stack:start -->` and `<!-- pr-stack:end -->` from every open PR in the active chain.
+   - Start with the most complete existing ordered list. Preserve any additional PR numbers found in the other blocks without removing or reordering existing entries. If the blocks disagree about the relative order of the same PRs, stop and ask the user which order is correct.
+   - Add active PRs missing from the lineage in the position implied by the current base chain.
+   - If no marked block exists yet, initialize the lineage from the active chain.
+
+5. Ensure each active stack branch exists locally and is not behind origin:
    ```bash
    git rev-parse --verify refs/heads/<branch> || git branch <branch> origin/<branch>
    git rev-list --count <branch>..origin/<branch>   # must print 0 for every branch
@@ -73,6 +80,11 @@ When updating stack descriptions, preserve every PR already recorded as part of 
    ```bash
    bash scripts/stack-push.sh <B1> <B2> <B3>
    ```
+9. Update the marked stack block in every open PR in the active chain:
+   - Render the complete description lineage, not just the active PRs. GitHub supplies the merged and closed status in its UI; do not add status text or emoji.
+   - Put `👈 this PR` on the PR whose description is being updated and nowhere else.
+   - Replace only the content from `<!-- pr-stack:start -->` through `<!-- pr-stack:end -->`. Preserve the rest of the description.
+   - Do not edit descriptions of merged or closed PRs.
 
 ## Common Workflows
 
