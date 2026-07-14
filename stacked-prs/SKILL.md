@@ -29,16 +29,19 @@ Add some markdown to the PRs to help reviewers navigate the stack.
 It should be a list of PR numbers with a pointer to the current pr, like this:
 
 ```markdown
-## PR Stack:
+<!-- pr-stack:start -->
+
+# PR Stack:
 
 - #1234
 - #1233 👈 this PR
 - #1232
+<!-- pr-stack:end -->
 ```
 
 Do not add more descriptions to the markdown list. GitHub renders the PR numbers as the full titles, so extra description just makes it harder to read.
 
-When updating the stack because parts have been merged in, re-write the stack description markdown in each still-open PR so reviewers can still navigate through them.
+When updating stack descriptions, preserve every PR already recorded as part of the stack, including merged and closed PRs. Keep entries in their original stack position. Add newly discovered PRs, but never remove an existing entry because it is no longer open or no longer appears in the current GitHub base chain
 
 ### Adding, Updating, Merging, Maintaining Stacked PRs
 
