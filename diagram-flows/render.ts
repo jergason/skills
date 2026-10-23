@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { renderMermaidAscii } from "beautiful-mermaid";
+import { renderMermaidASCII } from "beautiful-mermaid";
 
 interface Options {
   paddingX: number;
@@ -63,7 +63,7 @@ async function main() {
   }
 
   try {
-    const output = renderMermaidAscii(diagram, {
+    const output = renderMermaidASCII(diagram, {
       paddingX: options.paddingX,
       paddingY: options.paddingY,
     });
