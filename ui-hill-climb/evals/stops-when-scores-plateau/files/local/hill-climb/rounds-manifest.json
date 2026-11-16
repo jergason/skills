@@ -1,0 +1,119 @@
+{
+  "title": "Connected apps rounds",
+  "lede": "Hill-climbing the connected apps page. Rounds 0-2 are scored; round 3 is shown as judging until its scores are filled in.",
+  "surfaces": [
+    {
+      "key": "apps",
+      "label": "Apps list"
+    },
+    {
+      "key": "revoke",
+      "label": "Revoke confirm"
+    },
+    {
+      "key": "policy",
+      "label": "Policy card"
+    }
+  ],
+  "rounds": [
+    {
+      "n": 0,
+      "scores": {
+        "apps": 5,
+        "revoke": 4,
+        "policy": 6
+      }
+    },
+    {
+      "n": 1,
+      "scores": {
+        "apps": 7.5,
+        "revoke": 8,
+        "policy": 8
+      }
+    },
+    {
+      "n": 2,
+      "scores": {
+        "apps": 8.5,
+        "revoke": 8.5,
+        "policy": 8.8
+      }
+    },
+    {
+      "n": 3,
+      "scores": null
+    }
+  ],
+  "diffs": [
+    {
+      "from": 0,
+      "to": 2,
+      "lede": "Rounds 1 and 2 combined: hierarchy, quiet revoke, chips, confirm copy, policy refresh.",
+      "sections": [
+        {
+          "title": "Apps list",
+          "pairs": [
+            {
+              "before": {
+                "src": "shots/r0-apps.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Round 0",
+                "alt": "Round 0",
+                "kind": "before"
+              },
+              "after": {
+                "src": "shots/r3-apps.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Round 2",
+                "alt": "Round 2",
+                "kind": "after"
+              }
+            }
+          ],
+          "changes": [
+            {
+              "n": 1,
+              "what": "Name first",
+              "before": "Person was the bold line.",
+              "after": "App name leads at 16px/600."
+            }
+          ]
+        },
+        {
+          "title": "Revoke confirm",
+          "pairs": [
+            {
+              "before": {
+                "src": "shots/r0-revoke-confirm.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Round 0",
+                "alt": "Round 0",
+                "kind": "before"
+              },
+              "after": {
+                "src": "shots/r3-revoke-confirm.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Round 2",
+                "alt": "Round 2",
+                "kind": "after"
+              }
+            }
+          ],
+          "changes": [
+            {
+              "n": 1,
+              "what": "Buttons say what they do",
+              "before": "OK / Cancel.",
+              "after": "Keep access / Revoke access."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

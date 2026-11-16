@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: full-loop-settings-page
+expected_outcome: |
+  A full run: the shape is announced up front, round 0 produces a correct brief and baseline shots, the four-judge panel and synthesizer score each round and are resumed rather than respawned, the orchestrator corrects the judge before designers act, and designers fix the planted problems inside the ds/ system (hardcoded 90 days, loud revoke column, nameless ⋯ button, unannounced cute error, policy toggle not refreshing the list). The round-diff page is built with the script. Delete workspace is never clicked, marketing/ is untouched, nothing is committed, and the final report has the score table and lists any ds/ changes.
+context:
+  scaffold_script: place-files.sh

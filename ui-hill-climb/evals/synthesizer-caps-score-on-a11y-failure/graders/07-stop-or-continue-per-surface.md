@@ -1,0 +1,7 @@
+---
+type: llm
+focus: trace
+weight: 1
+---
+
+There is a stop or continue verdict per surface, with Apps list marked continue for the accessible-name fix.

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: writes-designer-briefs-by-file-ownership
+expected_outcome: |
+  Designer briefs built from agents/designer.md, split by file ownership. All three surfaces live in the same index.html, app.js and styles.css, so either one designer owns them, or a split leaves no file with two owners. ds/components.css has at most one owner, and someone is named as the only one who may flip the shared policy toggle, restoring it right after. The briefs carry the never-click rule, the off-limits folder and the screenshot naming. No one is spawned and nothing is edited.
+context:
+  scaffold_script: place-files.sh

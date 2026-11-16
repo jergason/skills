@@ -1,0 +1,22 @@
+[
+  {"query": "the onboarding flow in apps/web/src/onboarding looks fine but not *good*. can you get it to Linear-level polish? i've got the dev server on :3000", "should_trigger": true},
+  {"query": "Can you have a few judge agents score our billing settings page on typography, copy, states and a11y, then fix whatever they flag and repeat until it's 9+?", "should_trigger": true},
+  {"query": "our consent screen (src/routes/oauth/consent.tsx) feels janky — hierarchy is off and the copy is vague. iterate on it with screenshots until it's actually great", "should_trigger": true},
+  {"query": "rate the dashboard home page 0-10 on visual craft and tell me what's dragging it down, then improve it. storybook is running at localhost:6006", "should_trigger": true},
+  {"query": "level up the empty, loading and error states on the invoices table. right now loading is just a spinner that vanishes and errors say 'something went wrong'", "should_trigger": true},
+  {"query": "I'd like the team settings page to stop looking like a bootstrap template. Same design system (we use our own @acme/ui), just make it excellent. take a few rounds if you need", "should_trigger": true},
+  {"query": "pls polish the spacing + type on the pricing page, it's close but everything is kinda the same weight and the cards don't line up", "should_trigger": true},
+  {"query": "two rounds max: have design reviewers score the sign-up dialog, fix the top issues, show me before/after screenshots", "should_trigger": true},
+  {"query": "make the admin audit-log view feel like Stripe's dashboard. it's in packages/admin/src/AuditLog.tsx and runs with pnpm dev", "should_trigger": true},
+  {"query": "change the 'Submit' button on the contact form to say 'Send message'", "should_trigger": false},
+  {"query": "build me a brand new settings page for notification preferences from this figma: figma.com/design/abc123/Notifications", "should_trigger": false},
+  {"query": "audit our whole React codebase and give me a prioritized list of improvements — perf, state management, component structure", "should_trigger": false},
+  {"query": "the modal on /checkout traps focus wrong and the close button has no label. can you fix the keyboard + screen reader issues?", "should_trigger": false},
+  {"query": "profile why the dashboard feels laggy when you scroll the activity feed, I think something is forcing reflows", "should_trigger": false},
+  {"query": "can you review this PR's CSS changes for bugs before I merge? gh pr 482", "should_trigger": false},
+  {"query": "set up a design system for us — tokens, type scale, a button and input component — we don't have one yet", "should_trigger": false},
+  {"query": "write a visual explainer page showing how our auth flow works, with a diagram", "should_trigger": false},
+  {"query": "grade these three landing page mockups (attached pngs) and tell me which one to go with. no code, just your opinion", "should_trigger": false},
+  {"query": "take a screenshot of localhost:3000/settings so I can paste it in slack", "should_trigger": false},
+  {"query": "our Next.js build is failing with a tailwind config error after upgrading to v4, help", "should_trigger": false}
+]

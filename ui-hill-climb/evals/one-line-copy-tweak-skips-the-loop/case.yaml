@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: one-line-copy-tweak-skips-the-loop
+expected_outcome: |
+  The row button label in app.js reads Disconnect. No judges, designers, brief, screenshots or round page: the skill says a one-line copy tweak is just a change.
+context:
+  scaffold_script: place-files.sh

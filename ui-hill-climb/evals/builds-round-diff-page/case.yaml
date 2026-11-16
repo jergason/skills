@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: builds-round-diff-page
+expected_outcome: |
+  rounds.html is rendered by build_rounds_page.py from a manifest. It shows all three surfaces including the Policy card's drop (6 → 5.5), round 2 as Judging…, round 1 verdicts labelled as round 1, and before/after pairs that use the re-shot r1b confirm rather than the stale one. Every numbered pin sits on the element its change describes, with the same number on both images. Nothing is published.
+context:
+  scaffold_script: place-files.sh

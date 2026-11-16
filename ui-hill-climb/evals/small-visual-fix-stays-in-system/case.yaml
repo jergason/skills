@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: small-visual-fix-stays-in-system
+expected_outcome: |
+  The Revoke buttons use the design system's quiet destructive treatment (`.btn .btn-danger-text`) instead of new hand-rolled values. The old red-outline rule is gone, the buttons still read as destructive, and nothing else changed. No hill-climb machinery for a one-element fix.
+context:
+  scaffold_script: place-files.sh

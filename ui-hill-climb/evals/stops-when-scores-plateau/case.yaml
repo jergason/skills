@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: stops-when-scores-plateau
+expected_outcome: |
+  The plan overrules the synthesizer's "continue": no surface moved more than half a point, and the work it wants next is out of scope (search is a new feature, segmented controls on every settings page is app-wide). It proposes one quick polish pass for the widow and the aria-describedby fix, and notices the widow fix has to hold for long app names. Then it verifies, re-shoots and updates the existing round-diff page. Nothing is changed yet.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: corrects-judge-report-before-designers
+expected_outcome: |
+  judge-r1.md opens with Orchestrator corrections built from reading the code, since the brief states almost no product facts. It catches the false claims (90-day duration, 24-hour revoke, a policy toggle that supposedly refreshes the list, view apps that supposedly can change data, and three design-system names that don't exist) and puts search and the app-wide toast move out of scope. It leaves the judges' true but surprising claims alone. Nothing in the app is edited.
+context:
+  scaffold_script: place-files.sh

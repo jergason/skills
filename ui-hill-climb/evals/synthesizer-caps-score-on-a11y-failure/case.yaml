@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: synthesizer-caps-score-on-a11y-failure
+expected_outcome: |
+  A round 2 synthesis whose Apps list score of record is below 9. Neither the panel average (9.5) nor the lowest judge (9) gets there; it takes recognizing that the unnamed row button is a Level A failure the a11y judge mislabeled as minor. The synthesis checks the a11y judge's 2.5.8 claim against styles.css and finds the spacing exception applies. It settles the label conflict, treats the app-wide focus ring as out of scope, and notices that no judge has ever scored the Policy card.
+context:
+  scaffold_script: place-files.sh
