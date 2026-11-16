@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: designer-removes-ai-tells
+expected_outcome: |
+  The designer applies the judges' fixes to the apps list and callout, and removes the AI design tells from the components it touches, even though the judge report never mentions them and suggests adding one: the row metadata and the paused chip no longer join facts with middle dots, and no box has a coloured left border (the callout keeps standing out through a tint, a full border, an icon or a label). Everything the dots joined is still shown. The report names the departure from the judges' left-border suggestion and why. Nothing is committed.
+context:
+  scaffold_script: place-files.sh

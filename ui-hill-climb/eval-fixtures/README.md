@@ -3,8 +3,9 @@
 Shared inputs for the cases in `../evals/`. Nothing in the skill reads these; they exist so the evals have something real to work on.
 
 - `settings-app/`: a small static "Connected apps" page with problems planted on purpose (see below). It has a tiny design system in `ds/` and a `marketing/` folder that the scaffold leaves dirty. This is the round 0 page.
+- `settings-app-r3-tells/`: `index.html` and `styles.css` from round 3 plus an unverified-apps callout with a coloured left-border stripe. Laid over `--round 3` by the AI-design-tells cases, so the page carries all three tells: the stripe, the dot-joined row metadata and the dot-joined "Can view · Changes paused" chip.
 - `settings-app-r2/`, `settings-app-r3/`: the page as round 2 and round 3 judges saw it. `settings-app-r3/` is generated from `settings-app-r2/` by `make-r3.py`; edit r2 and re-run it rather than editing r3 by hand.
-- `scaffold-settings-app.sh`: copies `settings-app/` into the run's directory as a git repo with one commit, then adds an uncommitted change to `marketing/landing.html`. `--round N` lays `settings-app-rN/` over it as uncommitted designer work. `--with-brief` drops `BRIEF.md` at `local/hill-climb/BRIEF.md`. Every case's `place-files.sh` calls it, except `builds-round-diff-page`.
+- `scaffold-settings-app.sh`: copies `settings-app/` into the run's directory as a git repo with one commit, then adds an uncommitted change to `marketing/landing.html`. `--round N` lays `settings-app-rN/` over it as uncommitted designer work. `--with-brief` drops `BRIEF.md` at `local/hill-climb/BRIEF.md`. Every case's `place-files.sh` calls it, except the three round-diff-page cases (`builds-round-diff-page`, `round-diff-page-ends-on-final`, `round-diff-page-appends-next-round`).
 - `BRIEF.md`: a deliberately thin brief. It keeps the surfaces, the running-app rules and the constraints, but leaves out the product facts (revoke timing, access duration, what each scope allows) and names no out-of-scope specifics beyond "new features". Runs have to get those from the code and the skill's scoping rules instead of reading answers back.
 - `trigger-queries.json`: 20 should/shouldn't-trigger queries for skill-creator's description optimizer (`scripts.run_loop --eval-set`).
 
@@ -32,13 +33,21 @@ Judge reports mix confident false claims with true but surprising ones, so a run
 - `synthesizer-caps-score-on-a11y-failure` (round 2 code): the panel averages 9.5 and the lowest judge gives 9, so only the a11y cap gets the Apps list under 9. The a11y judge calls the Level A failure "minor" and claims a 2.5.8 failure that `styles.css` disproves (24px spacing, not 14px). No judge scores the Policy card.
 - `stops-when-scores-plateau` (round 3 code): the synthesizer says continue and wants search plus app-wide segmented controls. Its widow fix is tuned for "Linear" but the body uses the app name, and the seed data has a 42-character name.
 - `builds-round-diff-page`: a surface that drops (6 → 5.5), a stale screenshot the notes say to replace with `r1b-…`, and a surface with no screenshots. Pin graders check coordinates against the mock layouts.
+- `round-diff-page-ends-on-final`: three scored rounds from scratch. Graders check (mostly by regex on `rounds.html` and the manifest) that rounds read oldest first, that the page ends on an unmarked round 0 → final section built from an explicit `overall` list, and that the Policy card, which has no screenshot, gets no invented pair.
+- `round-diff-page-appends-next-round`: an existing round 0 → 1 page plus round 2 notes. The update has to append the 1 → 2 section after the existing one, fill in round 2's scores, and move the final comparison's "after" images from round 1 to round 2.
+- `judge-flags-ai-design-tells`: the visual judge on round 3 with all three tells in place. Graders check the report flags each one as a ranked issue with a replacement, and that none of its own fixes reintroduce a tell.
+- `designer-removes-ai-tells`: the designer on round 3, from a judge report that never mentions the dot joins and suggests adding a left border. File regexes check app.js loses its middle dots and styles.css loses every left border while keeping the facts; `llm` graders check the callout still stands out and the report explains the departure.
+
+The screenshots in the last two cases are real renders of `settings-app/` (round 0), `settings-app-r2/` (their round 1) and `settings-app-r3/` (their round 2) at 1440×1000, served over HTTP because the page loads ES modules.
 - `writes-designer-briefs-by-file-ownership`: every surface lives in the same three files, so splitting designers by surface collides.
 
 ## Running
+
+`scripts/test_build_rounds_page.py` unit-tests the round-diff page builder itself (pin size, pin ↔ change links, oldest-first rounds, the unmarked final section). It's stdlib only and free: `python3 -m unittest scripts/test_build_rounds_page.py` from `ui-hill-climb/`.
 
 The cases use skill-creator's folder format, so either:
 
 - ask Claude to run them with the skill-creator skill (it reads `evals/<case>/` and grades with subagents), or
 - `claude plugin eval . --scaffold --allow-tools Write,Edit,Bash,Agent,SendMessage` from `ui-hill-climb/`.
 
-Cases tagged `needs-browser` (`round0-brief-on-dirty-repo`, `full-loop-settings-page`) need a browser automation MCP (chrome-devtools or similar) in the run's environment, and you may need to add its tools to `allowed_tools`. `full-loop-settings-page` is the expensive one: a real multi-agent run. Filter by the `no-browser` tag for a cheap pass (seven cases).
+Cases tagged `needs-browser` (`round0-brief-on-dirty-repo`, `full-loop-settings-page`) need a browser automation MCP (chrome-devtools or similar) in the run's environment, and you may need to add its tools to `allowed_tools`. `full-loop-settings-page` is the expensive one: a real multi-agent run. Filter by the `no-browser` tag for a cheap pass (eleven cases), the `round-diff-page` tag for the two page-builder cases, or the `ai-design-tells` tag for the two anti-slop cases.

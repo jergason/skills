@@ -1,0 +1,251 @@
+{
+  "title": "Connected apps rounds",
+  "lede": "Hill-climbing the connected apps page. Round 2 is being judged.",
+  "surfaces": [
+    {
+      "key": "apps",
+      "label": "Apps list"
+    },
+    {
+      "key": "revoke",
+      "label": "Revoke confirm"
+    },
+    {
+      "key": "policy",
+      "label": "Policy card"
+    }
+  ],
+  "rounds": [
+    {
+      "n": 0,
+      "scores": {
+        "apps": 5,
+        "revoke": 4,
+        "policy": 6
+      },
+      "verdicts": {
+        "apps": "The person outranks the app; a column of red buttons.",
+        "revoke": "\"Are you sure?\" with OK/Cancel.",
+        "policy": "A bare toggle with no explanation."
+      }
+    },
+    {
+      "n": 1,
+      "scores": {
+        "apps": 7.5,
+        "revoke": 7.5,
+        "policy": 8
+      },
+      "verdicts": {
+        "apps": "Name-first rows and quiet revoke. The ⋯ button is a bare 20px glyph.",
+        "revoke": "Names the app; the confirm label is long and the body doesn't say when.",
+        "policy": "Helper text explains the toggle."
+      }
+    },
+    {
+      "n": 2,
+      "scores": null
+    }
+  ],
+  "diffs": [
+    {
+      "from": 0,
+      "to": 1,
+      "lede": "Round 1 fixed the row hierarchy, quieted the destructive actions and rewrote the confirm.",
+      "sections": [
+        {
+          "title": "Apps list",
+          "pairs": [
+            {
+              "before": {
+                "src": "shots/r0-apps.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Apps list, round 0",
+                "alt": "Apps list, round 0",
+                "pins": [
+                  [
+                    1,
+                    450,
+                    266
+                  ],
+                  [
+                    2,
+                    1062,
+                    273
+                  ],
+                  [
+                    3,
+                    325,
+                    274
+                  ],
+                  [
+                    4,
+                    388,
+                    688
+                  ]
+                ]
+              },
+              "after": {
+                "src": "shots/r1-apps.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Apps list, round 1",
+                "alt": "Apps list, round 1",
+                "pins": [
+                  [
+                    1,
+                    372,
+                    298
+                  ],
+                  [
+                    2,
+                    1042,
+                    305
+                  ],
+                  [
+                    3,
+                    321,
+                    304
+                  ],
+                  [
+                    4,
+                    381,
+                    733
+                  ]
+                ]
+              }
+            }
+          ],
+          "changes": [
+            {
+              "n": 1,
+              "what": "App name leads each row",
+              "before": "\"Connected by …\" was the bold line.",
+              "after": "The app name is the strong line; the person moved to the metadata."
+            },
+            {
+              "n": 2,
+              "what": "Revoke is quiet",
+              "before": "A column of red outlined buttons.",
+              "after": "Small red text buttons."
+            },
+            {
+              "n": 3,
+              "what": "Neutral avatars",
+              "before": "A bright colour per row.",
+              "after": "Grey initials."
+            },
+            {
+              "n": 4,
+              "what": "Delete workspace isn't a slab",
+              "before": "Solid red button.",
+              "after": "Red text button with an explanation."
+            }
+          ]
+        },
+        {
+          "title": "Revoke confirm",
+          "pairs": [
+            {
+              "before": {
+                "src": "shots/r0-revoke-confirm.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Revoke confirm, round 0",
+                "alt": "Revoke confirm, round 0",
+                "pins": [
+                  [
+                    1,
+                    719,
+                    490
+                  ],
+                  [
+                    2,
+                    720,
+                    525
+                  ]
+                ]
+              },
+              "after": {
+                "src": "shots/r1-revoke-confirm.png",
+                "w": 1440,
+                "h": 1000,
+                "caption": "Revoke confirm, round 1",
+                "alt": "Revoke confirm, round 1",
+                "pins": [
+                  [
+                    1,
+                    638,
+                    476
+                  ],
+                  [
+                    2,
+                    720,
+                    528
+                  ]
+                ]
+              }
+            }
+          ],
+          "changes": [
+            {
+              "n": 1,
+              "what": "Says what happens",
+              "before": "\"Are you sure?\"",
+              "after": "\"Revoke Linear?\" and what it means."
+            },
+            {
+              "n": 2,
+              "what": "Buttons say what they do",
+              "before": "OK / Cancel.",
+              "after": "Keep access / Revoke Linear's access to this workspace."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "pairs": [
+      {
+        "title": "Apps list",
+        "before": {
+          "src": "shots/r0-apps.png",
+          "w": 1440,
+          "h": 1000,
+          "caption": "Apps list, round 0",
+          "alt": "Apps list, round 0",
+          "pins": []
+        },
+        "after": {
+          "src": "shots/r1-apps.png",
+          "w": 1440,
+          "h": 1000,
+          "caption": "Apps list, round 1",
+          "alt": "Apps list, round 1",
+          "pins": []
+        }
+      },
+      {
+        "title": "Revoke confirm",
+        "before": {
+          "src": "shots/r0-revoke-confirm.png",
+          "w": 1440,
+          "h": 1000,
+          "caption": "Revoke confirm, round 0",
+          "alt": "Revoke confirm, round 0",
+          "pins": []
+        },
+        "after": {
+          "src": "shots/r1-revoke-confirm.png",
+          "w": 1440,
+          "h": 1000,
+          "caption": "Revoke confirm, round 1",
+          "alt": "Revoke confirm, round 1",
+          "pins": []
+        }
+      }
+    ]
+  }
+}

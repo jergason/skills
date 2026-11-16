@@ -22,7 +22,7 @@ Manifest format:
     {"n": 0, "scores": {"admin": 5, ...}, "verdicts": {"admin": "...", ...}},
     {"n": 1, "scores": null}                    # null or missing = "Judging…"
   ],
-  "diffs": [                                    # any order; rendered newest first
+  "diffs": [                                    # any order; rendered oldest first
     {
       "from": 0, "to": 1,
       "lede": "What this round was about.",
@@ -40,8 +40,20 @@ Manifest format:
         }
       ]
     }
-  ]
+  ],
+  "overall": {                                  # rendered last, with no pins
+    "from": 0, "to": 3,                         # optional; default first round → latest judged round
+    "lede": "Optional sentence.",
+    "pairs": [ {"title": "Admin page", "before": FIGURE, "after": FIGURE} ]
+  }
 }
+
+"overall" is the unmarked round 0 → final comparison: one pair per surface,
+the very first screenshot against the latest one. Fill it every round so the
+page always ends on the cumulative result. Any "pins" on its figures are
+ignored. When it's missing, the page derives it from the diffs: for each
+section title, the first pair's "before" from the earliest diff it appears in
+and the last pair's "after" from the latest one.
 
 FIGURE:
   {"src": "shots/r1-admin.png", "w": 1440, "h": 1000,
@@ -51,8 +63,10 @@ FIGURE:
    "pins": [[1, 580, 255], [2, 465, 352]]}   # [number, x, y] in image pixels
 
 Use the same pin number on both images of a pair for the spot that changed,
-and the same number on the change that explains it. Text fields are escaped;
-wrap code in backticks to render it as <code>.
+and the same number on the change that explains it. Pins and change numbers
+link to each other: clicking a pin scrolls to its change, and clicking a
+change's number scrolls to its pins. Text fields are escaped; wrap code in
+backticks to render it as <code>.
 """
 
 import html
@@ -114,18 +128,21 @@ figcaption { font-size: 13px; font-weight: 600; color: var(--muted); display: fl
 .tag.after { background: var(--accent-soft); color: var(--accent); }
 .shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); max-width: 100%; }
 .shot img { display: block; width: 100%; height: auto; }
-.pin { position: absolute; transform: translate(-50%, -50%); width: 24px; height: 24px; border-radius: 50%;
-  display: grid; place-items: center; font: 600 12px/1 var(--font-body); color: #fff; background: var(--accent);
-  box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(0,0,0,.25); transition: transform .15s ease; }
+.pin { position: absolute; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 50%;
+  display: grid; place-items: center; font: 700 10px/1 var(--font-body); color: #fff; background: var(--accent);
+  text-decoration: none; box-shadow: 0 0 0 1.5px #fff, 0 1px 3px rgba(0,0,0,.3); transition: transform .15s ease; }
 .before .pin { background: var(--before); }
-.pin.hot { transform: translate(-50%, -50%) scale(1.35); }
-@media (max-width: 520px) { .pin { width: 18px; height: 18px; font-size: 10px; } }
+.pin:hover, .pin.hot, .pin.flash { transform: translate(-50%, -50%) scale(1.4); z-index: 1; }
+@media (max-width: 520px) { .pin { width: 14px; height: 14px; font-size: 9px; } }
 ol.changes { list-style: none; padding: 0; margin: 0; display: grid; background: var(--surface);
   border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-ol.changes li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+ol.changes li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line);
+  scroll-margin-block: 96px; transition: background-color .3s ease; }
 ol.changes li:last-child { border-bottom: 0; }
-ol.changes li:hover, ol.changes li:focus-within { background: var(--accent-soft); }
-.n { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font: 600 12px/1 var(--font-body); }
+ol.changes li:hover, ol.changes li:focus-within, ol.changes li.flash { background: var(--accent-soft); }
+.n { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center;
+  font: 600 12px/1 var(--font-body); text-decoration: none; }
+a.n:hover { box-shadow: 0 0 0 3px var(--accent-soft); }
 .ba { color: var(--muted); font-size: 14px; display: grid; gap: 2px; min-width: 0; }
 .ba b { font-weight: 600; color: var(--fg); }
 .what { font-weight: 600; color: var(--fg); font-size: 15px; }
@@ -133,17 +150,47 @@ ol.changes li:hover, ol.changes li:focus-within { background: var(--accent-soft)
 .note { font-size: 14px; color: var(--muted); }
 code { font-size: 0.92em; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .pin { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .pin, ol.changes li { transition: none; } }
 """
 
+# Pins link to their change (#<group>-c<n>) and change numbers link to the first pin (#<group>-p<n>), so the page
+# works as plain anchors. The script upgrades that: centred smooth scrolling, a brief highlight of the target, and
+# hover/focus on a change lighting up its pins.
 SCRIPT = """
+const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+// 'flash' marks a click target for a moment; it's separate from the hover 'hot' class so a mouseleave caused by
+// the scroll itself can't cancel it.
+const flash = els => {
+  els.forEach(el => el.classList.add('flash'));
+  setTimeout(() => els.forEach(el => el.classList.remove('flash')), 1400);
+};
 document.querySelectorAll('section[data-group]').forEach(section => {
-  const pinsFor = n => section.querySelectorAll('.pin[data-n="' + n + '"]');
+  const pinsFor = n => [...section.querySelectorAll('.pin[data-n="' + n + '"]')];
   section.querySelectorAll('ol.changes li').forEach(li => {
     const on = () => pinsFor(li.dataset.n).forEach(p => p.classList.add('hot'));
     const off = () => pinsFor(li.dataset.n).forEach(p => p.classList.remove('hot'));
     li.addEventListener('mouseenter', on); li.addEventListener('mouseleave', off);
-    li.addEventListener('focus', on); li.addEventListener('blur', off);
+    li.addEventListener('focusin', on); li.addEventListener('focusout', off);
+  });
+  section.addEventListener('click', event => {
+    const link = event.target.closest('a.pin, a.n');
+    if (!link) return;
+    const target = document.getElementById(link.hash.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    history.replaceState(null, '', link.hash);
+    const n = link.dataset.n;
+    if (link.classList.contains('pin')) {
+      target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+      target.querySelector('a.n')?.focus({ preventScroll: true });
+      flash([target]);
+    } else {
+      // Centre the pin itself: screenshots can be taller than the viewport. Focus first, because leaving the
+      // change item fires its focusout, which would otherwise clear the highlight straight away.
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+      flash(pinsFor(n));
+    }
   });
 });
 """
@@ -197,12 +244,21 @@ def scores_table(surfaces, rounds):
     )
 
 
-def figure(fig, kind, default_label):
+def pin(n, x, y, w, h, links):
+    """A pin linking to its change. The first pin with a given number in a section gets the id changes link back to."""
+    group, whats, seen = links
+    pin_id = f"{group}-p{n}"
+    id_attr = "" if pin_id in seen else f' id="{pin_id}"'
+    seen.add(pin_id)
+    label = html.escape(f"Change {n}: {whats.get(n, '')}".rstrip(": "))
+    return (f'<a class="pin" href="#{group}-c{n}"{id_attr} data-n="{n}" aria-label="{label}" title="{label}" '
+            f'style="left:{x / w * 100:.1f}%;top:{y / h * 100:.1f}%">{n}</a>')
+
+
+def figure(fig, kind, default_label, links=None):
+    """A labelled screenshot. Pins render only when `links` is given (an unmarked figure passes None)."""
     w, h = fig["w"], fig["h"]
-    pins = "".join(
-        f'<span class="pin" data-n="{n}" style="left:{x / w * 100:.1f}%;top:{y / h * 100:.1f}%">{n}</span>'
-        for n, x, y in fig.get("pins", [])
-    )
+    pins = "".join(pin(n, x, y, w, h, links) for n, x, y in fig.get("pins", [])) if links else ""
     label = text(fig.get("label") or default_label)
     return (
         f'<figure class="{kind}"><figcaption><span class="tag {kind}">{label}</span> {text(fig.get("caption", ""))}'
@@ -211,7 +267,7 @@ def figure(fig, kind, default_label):
     )
 
 
-def change_item(change):
+def change_item(change, group, pinned):
     parts = [f'<span class="what">{text(change["what"])}</span>']
     if change.get("before"):
         parts.append(f'<span><b>Before:</b> {text(change["before"])}</span>')
@@ -220,22 +276,27 @@ def change_item(change):
     if change.get("body"):
         parts.append(f"<span>{text(change['body'])}</span>")
     n = change["n"]
-    return f'<li tabindex="0" data-n="{n}"><span class="n">{n}</span><div class="ba">{"".join(parts)}</div></li>'
+    number = (f'<a class="n" href="#{group}-p{n}" data-n="{n}" aria-label="Show change {n} on the screenshots">{n}</a>'
+              if n in pinned else f'<span class="n">{n}</span>')
+    return f'<li id="{group}-c{n}" data-n="{n}">{number}<div class="ba">{"".join(parts)}</div></li>'
 
 
 def section(sec, diff, index):
     group = f"d{diff['from']}-{diff['to']}-{index}"
     before_label, after_label = f"Round {diff['from']}", f"Round {diff['to']}"
+    figures = [f for pair in sec.get("pairs", []) for f in (pair["before"], pair["after"])] + sec.get("extras", [])
+    pinned = {n for fig in figures for n, _x, _y in fig.get("pins", [])}
+    links = (group, {c["n"]: c["what"] for c in sec.get("changes", [])}, set())
     out = [f'<section class="surface" aria-labelledby="{group}-h" data-group="{group}">',
            f'<h2 id="{group}-h">{text(sec["title"])}</h2>']
     for pair in sec.get("pairs", []):
-        out.append('<div class="pair">' + figure(pair["before"], "before", before_label)
-                   + figure(pair["after"], "after", after_label) + "</div>")
+        out.append('<div class="pair">' + figure(pair["before"], "before", before_label, links)
+                   + figure(pair["after"], "after", after_label, links) + "</div>")
     if sec.get("changes"):
-        out.append('<ol class="changes">' + "".join(change_item(c) for c in sec["changes"]) + "</ol>")
+        out.append('<ol class="changes">' + "".join(change_item(c, group, pinned) for c in sec["changes"]) + "</ol>")
     if sec.get("extras"):
         out.append('<div class="extras">' + "".join(
-            figure(fig, fig.get("kind", "after"), after_label) for fig in sec["extras"]) + "</div>")
+            figure(fig, fig.get("kind", "after"), after_label, links) for fig in sec["extras"]) + "</div>")
     if sec.get("note"):
         out.append(f'<p class="note">{text(sec["note"])}</p>')
     out.append("</section>")
@@ -245,18 +306,55 @@ def section(sec, diff, index):
 def diff_block(diff):
     head = (f'<div class="round-head"><h2 class="round">Round {diff["from"]} → Round {diff["to"]}</h2>'
             f'<p class="lede">{text(diff.get("lede", ""))} Orange pins mark round {diff["from"]}, '
-            f'blue pins mark round {diff["to"]}. Hover a change to find its pins.</p></div>')
+            f'blue pins mark round {diff["to"]}. Click a pin to jump to its change, or a change number to jump '
+            f'to its pins.</p></div>')
     return head + "".join(section(sec, diff, i) for i, sec in enumerate(diff.get("sections", [])))
 
 
+def derive_overall(diffs):
+    """Fallback when the manifest has no "overall": per section title, the earliest before and the latest after."""
+    firsts, lasts, order = {}, {}, []
+    for diff in diffs:
+        for sec in diff.get("sections", []):
+            pairs = sec.get("pairs", [])
+            if not pairs:
+                continue
+            title = sec["title"]
+            if title not in firsts:
+                firsts[title] = pairs[0]["before"]
+                order.append(title)
+            lasts[title] = pairs[-1]["after"]
+    return {"pairs": [{"title": t, "before": firsts[t], "after": lasts[t]} for t in order]}
+
+
+def overall_block(manifest, diffs):
+    overall = manifest.get("overall") or derive_overall(diffs)
+    if not overall.get("pairs"):
+        return ""
+    rounds = sorted(r["n"] for r in manifest["rounds"])
+    judged = sorted(r["n"] for r in manifest["rounds"] if r.get("scores"))
+    start = overall.get("from", rounds[0] if rounds else 0)
+    end = overall.get("to", judged[-1] if judged else (rounds[-1] if rounds else 0))
+    lede = overall.get("lede") or "Where each surface started and where it ended up, with no markup."
+    out = [f'<div class="round-head" id="overall"><h2 class="round">Round {start} → Final</h2>'
+           f'<p class="lede">{text(lede)}</p></div>']
+    for i, pair in enumerate(overall["pairs"]):
+        sid = f"overall-{i}"
+        out.append(f'<section class="surface overall" aria-labelledby="{sid}-h"><h2 id="{sid}-h">{text(pair["title"])}</h2>'
+                   '<div class="pair">' + figure(pair["before"], "before", f"Round {start}")
+                   + figure(pair["after"], "after", f"Final (round {end})") + "</div></section>")
+    return "".join(out)
+
+
 def render(manifest, standalone):
-    diffs = sorted(manifest.get("diffs", []), key=lambda d: d["to"], reverse=True)
+    diffs = sorted(manifest.get("diffs", []), key=lambda d: (d["from"], d["to"]))
     body = (
         '<div class="wrap">'
         f'<header><h1>{text(manifest["title"])}</h1><p class="lede">{text(manifest.get("lede", ""))}</p></header>'
         f'<section class="surface" aria-labelledby="scores-h"><h2 id="scores-h">Scores</h2>'
         f'{scores_table(manifest["surfaces"], manifest["rounds"])}</section>'
         + "".join(diff_block(d) for d in diffs)
+        + overall_block(manifest, diffs)
         + "</div>"
     )
     head = (

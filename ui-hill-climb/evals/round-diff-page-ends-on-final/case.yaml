@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: round-diff-page-ends-on-final
+expected_outcome: |
+  rounds.html is rendered by build_rounds_page.py. The round sections read oldest first (Round 0 → Round 1, then Round 1 → Round 2), and the page ends on an unmarked "Round 0 → Final" section whose pairs are each surface's round 0 screenshot beside its round 2 screenshot, with no pins. The manifest lists that comparison explicitly under "overall" (Apps list and Revoke confirm; no invented pair for the Policy card). Pins render as links to their changes. Nothing is published.
+context:
+  scaffold_script: place-files.sh
