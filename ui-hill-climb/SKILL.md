@@ -65,7 +65,7 @@ Spawn the judge panel in parallel, one subagent per criterion. Each judge reads 
 
 | Judge                        | File                          | Looks at                                                                                    |
 | ---------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------- |
-| Visual craft                 | `agents/judge-visual.md`      | typography, hierarchy, spacing rhythm, alignment, density, color and emphasis, system fit   |
+| Visual craft                 | `agents/judge-visual.md`      | typography, hierarchy, spacing rhythm, alignment, density, color and emphasis, system fit, AI design tells |
 | Copy and content             | `agents/judge-copy.md`        | clarity, tone, accuracy against product facts, consistent vocabulary, button labels, errors |
 | Interaction and states       | `agents/judge-interaction.md` | feedback, destructive actions, loading/empty/error, state correctness bugs, decision order  |
 | Accessibility and responsive | `agents/judge-a11y.md`        | keyboard, screen reader, target size, contrast, narrow and phone widths                     |
@@ -151,6 +151,10 @@ Update the page after every judging round, not just at the end. Show scores as "
 ## Principles and references
 
 `references/taste.md` lists the designers, products and principles the judges and designers calibrate against, with what to take from each. Point every judge and designer at it. A judge that has a concrete reference ("the row hierarchy Linear uses in its issue list") gives far better critique than one told to "make it look good".
+
+**No AI design tells.** Two patterns read as AI-generated UI, and nothing this skill produces may add them: facts joined with middle dots or bullets on one line ("v14 · Published · Oct 2"), and coloured left-border stripes on boxes. Judges find them with a source sweep and flag each one as an issue (`agents/judge-visual.md`), a surface that still has one can't score 9+, and designers remove them from any component they touch, even when a judge suggests one. `references/taste.md` ("Patterns to avoid") has the replacements.
+
+**Playing one role yourself.** When the person asks you to act as one judge, the synthesizer or a designer directly, rather than to run the loop, read that role's file in `agents/` first, plus `agents/judge-common.md` for any judge and `references/taste.md`, and follow them exactly as a subagent would. Their required steps (the visual judge's tells sweep, the designer's report) apply to you.
 
 ## Reporting faithfully
 

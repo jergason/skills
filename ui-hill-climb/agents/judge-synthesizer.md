@@ -11,7 +11,7 @@ Don't edit any files.
 
 ## What to produce
 
-1. **Score of record**, one row per surface plus a "Copy overall" row, with history (`5 → 7.5 → 8.5`). A surface's score is your judgment informed by the panel, not an average. A serious failure in one lane (a real accessibility failure, copy that misstates a permission, a state bug) caps the surface below 9 no matter how good it looks.
+1. **Score of record**, one row per surface plus a "Copy overall" row, with history (`5 → 7.5 → 8.5`). A surface's score is your judgment informed by the panel, not an average. A serious failure in one lane (a real accessibility failure, copy that misstates a permission, a state bug) caps the surface below 9 no matter how good it looks. So does any AI design tell the visual judge's sweep found that is still on the surface: keep every one in the ranked fixes, by name, even when you merge duplicates.
 2. **One ranked fix list per surface**, with duplicates merged. Where judges conflict (the visual judge wants a label shorter, the copy judge wants it more explicit), make the call and say why in one line.
 3. **Rulings on designer departures**, carried over from the judges, with your final word.
 4. **Out-of-scope list.** Fixes that need app-wide changes or new features. Keep them separate so designers don't chase them.
