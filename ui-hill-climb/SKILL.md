@@ -140,8 +140,9 @@ When the judges say stop but list optional items that are small and clearly righ
 The person wants to see what changed, so show it. Build one page that holds:
 
 - a score table: one row per surface, one column per round, with the delta from the previous round and the latest verdict
-- for each round transition, newest first: before/after screenshot pairs with **numbered pins** at the spots that changed (the same number on both images), and a change list keyed to those numbers with **Before** and **After** text
+- for each round transition, oldest first (round 0 → 1, then 1 → 2): before/after screenshot pairs with **numbered pins** at the spots that changed (the same number on both images), and a change list keyed to those numbers with **Before** and **After** text. Pins and change numbers link to each other, so a reader can jump between a spot and its explanation
 - extra shots that are new in a round (a dialog, a fixed bug state), and phone-width pairs
+- last, an unmarked **round 0 → final** comparison: one pair per surface, the very first screenshot beside the latest one, with no pins. Fill the manifest's `overall` list every round so the page always ends on the cumulative result
 
 `scripts/build_rounds_page.py` renders this from a JSON manifest. Read the docstring at the top of the script for the manifest format. Pin coordinates are in the image's own pixels, so read each screenshot and place pins by eye. Then publish it with whatever the environment offers: an Artifact tool if there is one (pass the screenshots as supporting files), otherwise open the HTML locally.
 
