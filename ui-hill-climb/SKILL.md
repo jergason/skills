@@ -1,11 +1,18 @@
 ---
 name: ui-hill-climb
-description: Iteratively raise the design quality of an existing UI by rounds of screenshots, a panel of specialist judge subagents scoring 0-10 on separate criteria (visual craft, copy, interaction and states, accessibility and responsive), and designer subagents that implement fixes inside the project's design system, until the scores plateau or reach 9+. Produces a published page of score history and annotated before/after screenshots per round. Use this whenever someone asks to polish, refine, level up, or "make excellent" a screen, page, flow or component; to review and improve typography, spacing, hierarchy or copy; to get UI "to Linear/Stripe quality"; to rate a UI with judges; or to iterate on design with screenshots, even if they don't say "hill-climb".
+description: Iteratively raise the design quality of an existing UI by rounds of screenshots, a panel of specialist judge subagents scoring 0-10 on separate criteria (visual craft, copy, interaction and states, accessibility and responsive), and designer subagents that implement fixes inside the project's design system, until the scores plateau or reach 9+. Use this whenever someone asks to polish, refine, level up, or "make excellent" a screen, page, flow or component; to review and improve typography, spacing, hierarchy or copy; to get UI "to Linear/Stripe quality"; to rate a UI with judges; or to iterate on design with screenshots, even if they don't say "hill-climb".
 ---
 
 # UI hill-climb
 
-Improve an existing UI in measured rounds. Each round is: capture screenshots, have a panel of judges score and critique, have designers fix what the judges found, then verify. The scores give the loop a direction, the screenshots give everyone a shared view, and the annotated round diffs show the person what changed and why.
+Improve an existing UI in measured rounds. Each round is:
+
+1. capture screenshots
+2. have a panel of judges score and critique
+3. have designers fix what the judges found
+4. verify
+
+The scores give the loop a direction, the screenshots give everyone a shared view, and the annotated round diffs show the person what changed and why.
 
 This skill orchestrates subagents. You (the orchestrator) own the brief, the screenshots, the corrections, the verification and the report. Judges never edit files. Designers never judge their own work.
 
@@ -13,7 +20,7 @@ This skill orchestrates subagents. You (the orchestrator) own the brief, the scr
 
 Use it for an existing, runnable UI where quality matters more than speed: a settings page, a consent screen, an onboarding flow, a dashboard view. For a brand-new screen, build a first version first, then hill-climb it. For a one-line copy tweak, just make the change.
 
-It is token-heavy: a round is roughly 4 judges, 1 synthesizer and 1-3 designers. Tell the person the rough shape before you start (surfaces, judges, designers, expected 2-4 rounds). If they want it cheaper, use **lite mode**: one combined judge (`agents/judge-combined.md`) instead of the panel.
+It is token-heavy: a round is roughly 4 judges, 1 synthesizer and 1-3 designers. Tell the person the rough shape before you start (surfaces, judges, designers, expected 2-4 rounds).
 
 ## Round 0: set up
 
