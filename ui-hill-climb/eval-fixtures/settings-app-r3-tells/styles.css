@@ -1,0 +1,46 @@
+body { margin: 0; background: var(--color-bg); font-family: var(--font-sans); color: var(--color-text); }
+.page { max-width: 880px; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+.stack-tight > * + * { margin-top: var(--space-2); }
+
+/* Callout for unverified apps. */
+.callout {
+  background: #fff7ed; border-left: 4px solid #ea580c; border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-3) var(--space-4); font-size: var(--text-md); color: var(--color-text);
+}
+
+.policy { display: flex; gap: var(--space-2); align-items: center; font-size: var(--text-md); }
+
+.apps { list-style: none; margin: 0; padding: 0; }
+.row { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) 0; }
+.row + .row { border-top: 1px solid var(--color-border); }
+
+.avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-md); flex: none;
+  display: grid; place-items: center; font-weight: var(--weight-semibold);
+  background: var(--color-chip-bg); color: var(--color-text);
+}
+
+.row-text { flex: 1; min-width: 0; }
+.row-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.row-name { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
+.row-chips { display: inline-flex; gap: var(--space-2); }
+.row-meta { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: 2px; }
+
+/* Row menu uses .btn-icon (32x32). */
+.more { margin-left: var(--space-2); }
+
+.error-text { color: var(--color-danger); font-size: var(--text-md); margin: 0; }
+
+.spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--color-border); border-top-color: var(--color-text); animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
+dialog { border: 1px solid var(--color-border); border-radius: var(--radius-md); width: 420px; max-width: calc(100vw - 32px); }
+.dialog-actions { display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-4); }
+
+@media (max-width: 600px) {
+  .row-meta .sep { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+}

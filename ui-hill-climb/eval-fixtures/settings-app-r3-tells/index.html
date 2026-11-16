@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acme · Connected apps</title>
+    <link rel="stylesheet" href="ds/tokens.css" />
+    <link rel="stylesheet" href="ds/components.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page stack">
+      <header class="stack-tight">
+        <h1 class="type-title">Connected apps</h1>
+        <p class="type-body muted" id="lede"></p>
+      </header>
+
+      <section class="card stack-tight">
+        <h2 class="type-heading">Workspace policy</h2>
+        <label class="policy">
+          <input type="checkbox" id="allow-changes" checked />
+          Allow apps to make changes
+        </label>
+        <p class="type-meta">When this is off, apps that can edit are limited to viewing.</p>
+      </section>
+
+      <aside class="callout" role="note">
+        <strong>2 apps aren't verified.</strong> Check that you recognise them before they keep access.
+      </aside>
+
+      <section class="card">
+        <div id="status"></div>
+        <ul id="apps" class="apps"></ul>
+      </section>
+
+      <section class="card stack-tight">
+        <h2 class="type-heading">Delete workspace</h2>
+        <p class="type-meta">Permanently deletes this workspace and everything in it.</p>
+        <div><button id="delete-workspace" class="btn btn-danger-text">Delete workspace…</button></div>
+      </section>
+    </main>
+
+    <dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+      <h2 class="type-heading" id="confirm-title"></h2>
+      <p class="type-body" id="confirm-body"></p>
+      <div class="dialog-actions">
+        <button id="confirm-cancel" class="btn" autofocus>Keep access</button>
+        <button id="confirm-ok" class="btn btn-danger-text"></button>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toasts" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

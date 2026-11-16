@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: judge-flags-ai-design-tells
+expected_outcome: |
+  The visual judge's report flags all three AI design tells on the round 3 page as ranked issues, each with a replacement structure: the dot-joined row metadata ("Last used … · Connected by …"), the dot-joined "Can view · Changes paused" chip, and the orange left-border stripe on the unverified-apps callout. None of its own suggested fixes or copy joins facts with dots or adds a left border. The page is left unchanged.
+context:
+  scaffold_script: place-files.sh
