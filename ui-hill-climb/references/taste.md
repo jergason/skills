@@ -2,7 +2,7 @@
 
 Judges and designers calibrate against these. When a critique or a fix leans on one of them, name it and the specific thing being borrowed: "the dense row Linear uses in its issue list" is useful, and "make it like Linear" is not.
 
-Contents: Products · People · Principles and sources · Patterns worth stealing
+Contents: Products, People, Principles and sources, Patterns worth stealing, Patterns to avoid
 
 ## Products
 
@@ -43,14 +43,20 @@ Contents: Products · People · Principles and sources · Patterns worth stealin
 
 These came up repeatedly in real hill-climbs:
 
-- **Lead with the name, then its trust signal.** "Claude Code · by claude.ai" or an "Unverified app" chip right after the name, rather than provenance in a caption two lines down.
+- **Lead with the name, then its trust signal.** Put the provenance right after the name as its own quiet element ("by claude.ai" in muted text, or an "Unverified app" chip), rather than in a caption two lines down.
 - **The most important fact is a chip, not a caption.** Access level, status and plan go in a small chip beside the name, with an icon (eye for view, pencil for edit).
 - **Metadata leads with the sort key.** If a list sorts by last used, the metadata line starts with "Last used 2 hours ago".
-- **Separators travel with the item after them,** so a wrapped line starts "· Expires…" and never ends on a dangling dot.
 - **Quiet destructive actions.** A small text button in the error color, with a confirm only when undoing is hard or affects someone else, and a success toast naming the thing.
 - **Buttons say what they grant.** "Allow viewing and changes", "Don't allow".
 - **Permission screens list every capability in one bordered box**, one row each with an icon column, including how long access lasts. "Always included" marks the rows you can't turn off.
 - **Calm by default, loud only for real risk.** A neutral note for "verified, but runs on your computer", and an orange callout only for unverified apps. Never two loud bands on one screen.
 - **People are neutral, apps are colored.** Fallback avatars for people in grey, so they can't be confused with app avatars.
-- **Show the paused state.** When an org-wide setting caps an individual's choice, show both: "Can view · Changes paused", with an explanation reachable by keyboard.
+- **Show the paused state.** When an org-wide setting caps an individual's choice, show both: a "Can view" chip and a "Changes paused" chip beside it, with an explanation reachable by keyboard.
 - **Hide visually, not semantically.** At narrow widths, use visually-hidden styles, not `display: none`, for information screen-reader users still need.
+
+## Patterns to avoid
+
+These are strong tells of AI-generated UI. Judges flag them as issues to fix, not optional polish, and designers never introduce them. When a designer touches a component that already has one, they remove it.
+
+- **No dot-joined lists on one line.** Never string several facts together with middle dots or bullets ("v14 · Published · Oct 2", "3 matches · Layout · Draft"). Give each fact its own structure instead: a chip or tag for a status, a labelled pair ("Modified Oct 2"), a second line, a table column, or a plain sentence with commas ("Published Oct 2"). If facts only make sense together, write them as words.
+- **No coloured left borders on boxes.** Never mark a card, notice, callout, quote, list item or diff block with a coloured stripe down its left edge. Show the kind of box with a full subtle border, a background tint, an icon, or a visible label ("Before", "Warning") instead.

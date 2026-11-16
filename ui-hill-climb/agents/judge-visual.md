@@ -12,6 +12,7 @@ You judge how the screen looks and reads before anyone reads a word closely. Bri
 - **Alignment.** Shared edges and baselines. Avatars and icons optically aligned with the first text line, not centered on a tall block. Controls that line up across rows.
 - **Density.** Is each row as compact as it can be while staying scannable? Can lines merge?
 - **Color and emphasis.** Is color carrying meaning or decorating? Is the loudest element on the page the one that deserves it? A column of red outlined buttons is louder than any primary action. Do warning colors appear only where there is real risk? Do two different things share an identical treatment?
+- **AI design tells.** Dot-joined lists of facts on one line and coloured left borders on boxes (see "Patterns to avoid" in `references/taste.md`). Flag every instance as an issue, with the replacement structure, and count a newly introduced one as a regression.
 - **System fit.** Does it look like it belongs next to its sibling pages? Does it use the design system's components and tokens, or hand-roll near-copies? Are there two hand-built versions of the same element that should be one component?
 
 ## Calibration questions

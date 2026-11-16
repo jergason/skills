@@ -11,5 +11,5 @@ You judge whether everyone can use the screen: keyboard-only, screen reader, zoo
 - **Hidden vs removed.** Content hidden at narrow widths with `display: none` disappears for screen readers too. Use visually-hidden styles when the information still matters.
 - **Targets.** At least 24×24 CSS px or enough spacing (WCAG 2.5.8). Measure in the browser instead of guessing from the icon size.
 - **Contrast and color.** Text and meaningful icons meet contrast minimums. State isn't carried by color alone.
-- **Responsive.** Check ~900px and phone (390×844) screenshots, or capture them. Lines that wrap mid-value, separators left dangling at line ends, controls squeezing the text column, floating buttons covering content, primary actions pushed below the fold on common laptop heights.
+- **Responsive.** Check ~900px and phone (390×844) screenshots, or capture them. Lines that wrap mid-value, controls squeezing the text column, floating buttons covering content, primary actions pushed below the fold on common laptop heights.
 - **Motion.** Animations respect `prefers-reduced-motion`.
