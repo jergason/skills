@@ -1,0 +1,18 @@
+[
+  {"query": "people keep pinging me about how to add a payment provider. can you write a README in src/payments that covers it?", "should_trigger": true},
+  {"query": "the README in packages/ui is like 300 lines and half of it is wrong now. cut it down", "should_trigger": true},
+  {"query": "we renamed fetchUser to loadUser across the api package, make sure the docs still match", "should_trigger": true},
+  {"query": "write a README for this repo, we're open sourcing it next week", "should_trigger": true},
+  {"query": "add a section to docs/database.md on how to add a migration", "should_trigger": true},
+  {"query": "does docs/architecture.md still describe what src/ actually does? check it and fix whatever's off", "should_trigger": true},
+  {"query": "document the auth module so the next agent that touches it doesn't have to read the whole thing", "should_trigger": true},
+  {"query": "the getting started section of our README is out of date since the monorepo move, fix it", "should_trigger": true},
+  {"query": "write the PR description for this branch", "should_trigger": false},
+  {"query": "add JSDoc comments to the exported functions in src/api/client.ts", "should_trigger": false},
+  {"query": "write release notes for v2.4 from CHANGELOG.md", "should_trigger": false},
+  {"query": "this blog post draft reads like AI wrote it, can you de-slop it", "should_trigger": false},
+  {"query": "write an ADR for moving from REST to tRPC", "should_trigger": false},
+  {"query": "what does src/jobs/runJob.ts do?", "should_trigger": false},
+  {"query": "generate an OpenAPI spec from our express routes", "should_trigger": false},
+  {"query": "write a handoff for whoever picks up the flaky checkout test tomorrow", "should_trigger": false}
+]

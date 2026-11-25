@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: project-readme-for-cli
+expected_outcome: |
+  README.md at the repo root says what envcheck does, shows how to install it under its published name @acme-tools/envcheck (the command it installs is envcheck), and has one short usage example in a code block. Every flag, default, exit code and schema field it mentions matches the code: flags are -s/--schema, -e/--env, --strict and -h/--help; defaults are env.schema.json and .env; exit codes are 0 (no problems), 1 (problems found) and 2 (bad arguments or unreadable file); schema types are string, number, boolean and url, and a variable is made optional with "optional": true (there is no "required" field). It may point at `envcheck --help` or examples/env.schema.json instead of listing everything.
+context:
+  scaffold_script: place-files.sh

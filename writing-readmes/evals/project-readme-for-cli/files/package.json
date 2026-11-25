@@ -1,0 +1,18 @@
+{
+  "name": "@acme-tools/envcheck",
+  "version": "0.3.0",
+  "description": "Check a .env file against a schema",
+  "type": "module",
+  "bin": {
+    "envcheck": "dist/cli.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
