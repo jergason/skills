@@ -41,7 +41,7 @@ Find how to reach every state you can: loading, empty, error, permission-denied,
 Use a browser automation tool (chrome-devtools MCP or similar):
 
 - Open your own page in a named isolated context, log in, and set a fixed viewport (1440×1000 desktop is a good default; add ~900px and 390×844 phone).
-- Name files `r<round>-<surface>[-<state>].png`, for example `r0-admin.png` and `r1-consent-unverified.png`.
+- Name files `r<round>-<surface>[-<state>].png`, for example `r0-admin.png` and `r1-consent-unverified.png`. `r0` is the baseline, and `rN` is the page after round N's fixes.
 - Save them where the screenshot tool can write. Some tools only write inside the workspace roots, so use a gitignored folder in the repo (such as `local/<task>-shots/`), not a temp dir.
 - If the page scrolls an inner container, full-page capture misses it. Scroll the element into view with a script, then take a viewport shot.
 - Look at every screenshot yourself before sending it anywhere.

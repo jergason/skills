@@ -35,5 +35,5 @@ Don't edit outside your scope. Don't commit, stash or reset.
 - What you changed and why, as design reasoning rather than a diff narration.
 - Each place you departed from the judges, and why.
 - Check results, quoting any failures.
-- Final screenshot paths, named `r[N+1]-<surface>[-<state>].png`.
+- Final screenshot paths, named `r[N]-<surface>[-<state>].png`, where N is this round (the number in `judge-r[N].md`).
 - Anything you deliberately didn't do, and why.

@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: {source: file, path: local/hill-climb/rounds.html}
+focus: {source: file, path: local/hill-climb/rounds-manifest.json}
 weight: 1
 ---
 

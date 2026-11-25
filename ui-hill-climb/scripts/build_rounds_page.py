@@ -226,6 +226,7 @@ def scores_table(surfaces, rounds):
     head = "".join(f'<th>Round {r["n"]}</th>' for r in ordered)
     judged = [r for r in ordered if r.get("scores")]
     latest_verdicts = judged[-1].get("verdicts", {}) if judged else {}
+    verdict_heading = f'Round {judged[-1]["n"]} verdict' if judged else "Verdict"
     rows = []
     for surface in surfaces:
         key = surface["key"]
@@ -240,7 +241,7 @@ def scores_table(surfaces, rounds):
     min_width = 360 + 120 * len(ordered)
     return (
         f'<div class="scores"><table style="min-width:{min_width}px"><thead><tr><th>Surface</th>{head}'
-        f'<th>Latest verdict</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+        f'<th>{verdict_heading}</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
     )
 
 

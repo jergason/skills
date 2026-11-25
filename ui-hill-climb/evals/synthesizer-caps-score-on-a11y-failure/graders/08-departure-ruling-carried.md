@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: {source: file, path: local/hill-climb/synthesis-r2.md}
 weight: 1
 ---
 

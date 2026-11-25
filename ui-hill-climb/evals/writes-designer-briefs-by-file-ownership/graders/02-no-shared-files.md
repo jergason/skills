@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: {source: file, path: local/hill-climb/designer-briefs.md}
 weight: 1
 ---
 

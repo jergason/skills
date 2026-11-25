@@ -7,3 +7,5 @@ Install:
 ```sh
 pnpm dlx skills add jergason/skills
 ```
+
+Evals for each skill live in `<skill>/evals/`. See [EVALS.md](EVALS.md) for how to run them and how to write graders that work.

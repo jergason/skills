@@ -57,6 +57,8 @@ The polished and invoices screenshots were rendered with headless Chrome through
 
 ## Running
 
+Repo-wide run instructions and grader rules are in [`../../EVALS.md`](../../EVALS.md).
+
 `scripts/test_build_rounds_page.py` unit-tests the round-diff page builder itself (pin size, pin ↔ change links, oldest-first rounds, the unmarked final section). It's stdlib only and free: `python3 -m unittest scripts/test_build_rounds_page.py` from `ui-hill-climb/`.
 
 The cases use skill-creator's folder format, so either:
