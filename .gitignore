@@ -3,3 +3,6 @@
 
 # claude plugin eval results (generated)
 **/evals/results/
+
+# Python bytecode
+__pycache__/
