@@ -1,0 +1,12 @@
+[
+  {"id": "ord_1001", "customer": "acme", "amount": "120.00", "createdAt": "2026-10-28T14:02:11Z"},
+  {"id": "ord_1002", "customer": "globex", "amount": "89.50", "createdAt": "2026-10-30T09:15:42Z"},
+  {"id": "ord_1003", "customer": "acme", "amount": "45.25", "createdAt": "2026-11-02T11:20:05Z"},
+  {"id": "ord_1004", "customer": "initech", "amount": "310.00", "createdAt": "2026-11-03T16:44:19Z"},
+  {"id": "ord_1005", "customer": "globex", "amount": "12.99", "createdAt": "2026-11-05T08:01:33Z"},
+  {"id": "ord_1006", "customer": "acme", "amount": "230.40", "createdAt": "2026-11-09T13:37:00Z"},
+  {"id": "ord_1007", "customer": "umbrella", "amount": "75.00", "createdAt": "2026-11-12T19:05:51Z"},
+  {"id": "ord_1008", "customer": "initech", "amount": "18.75", "createdAt": "2026-11-15T10:12:08Z"},
+  {"id": "ord_1009", "customer": "globex", "amount": "402.10", "createdAt": "2026-11-18T22:48:27Z"},
+  {"id": "ord_1010", "customer": "umbrella", "amount": "64.30", "createdAt": "2026-11-21T07:30:14Z"}
+]

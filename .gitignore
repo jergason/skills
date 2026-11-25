@@ -1,2 +1,5 @@
 # skill-creator eval runs (generated, contain nested git repos)
 *-workspace/
+
+# claude plugin eval results (generated)
+**/evals/results/

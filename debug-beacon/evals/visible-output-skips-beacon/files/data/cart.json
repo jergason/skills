@@ -1,0 +1,8 @@
+{
+  "id": "cart_8812",
+  "items": [
+    {"sku": "MUG-01", "price": 12.5, "qty": 2},
+    {"sku": "TEE-M", "price": 17.5, "qty": 1},
+    {"sku": "STICKER", "price": 2.5, "qty": 3}
+  ]
+}

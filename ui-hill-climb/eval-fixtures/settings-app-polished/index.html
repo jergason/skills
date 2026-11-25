@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connected apps - Acme settings</title>
+    <link rel="stylesheet" href="ds/tokens.css" />
+    <link rel="stylesheet" href="ds/components.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="settings-nav" aria-label="Workspace settings">
+        <p class="workspace" id="workspace-name"></p>
+        <ul>
+          <li><a href="/settings/general">General</a></li>
+          <li><a href="/settings/members">Members</a></li>
+          <li><a href="/settings/apps" aria-current="page">Connected apps</a></li>
+          <li><a href="/settings/billing">Billing</a></li>
+        </ul>
+      </nav>
+
+      <main class="settings-main stack">
+        <header class="stack-tight">
+          <h1 class="type-title">Connected apps</h1>
+          <p class="type-body muted" id="lede"></p>
+        </header>
+
+        <section class="card" aria-label="Workspace policy">
+          <label class="policy" for="allow-changes">
+            <span class="policy-text">
+              <span class="type-heading policy-title" id="policy-title">Allow apps to edit</span>
+              <span class="type-meta policy-note" id="policy-note">When this is off, apps that can edit are limited to viewing until you turn it back on.</span>
+            </span>
+            <input
+              type="checkbox"
+              role="switch"
+              id="allow-changes"
+              class="switch"
+              aria-labelledby="policy-title"
+              aria-describedby="policy-note"
+            />
+          </label>
+        </section>
+
+        <section class="card apps-card" aria-labelledby="apps-title">
+          <h2 class="visually-hidden" id="apps-title">Apps</h2>
+          <div id="status" aria-live="polite"></div>
+          <ul id="apps" class="apps"></ul>
+          <p class="type-meta unverified-note" id="unverified-note" hidden>Unverified apps haven't been reviewed by Acme.</p>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+      <h2 class="type-heading" id="confirm-title"></h2>
+      <div id="confirm-body" class="type-body">
+        <p id="confirm-lede"></p>
+        <ul class="consequences">
+          <li>It can't view or edit anything in this workspace.</li>
+          <li>To use it again, someone has to reconnect it.</li>
+        </ul>
+      </div>
+      <div class="dialog-actions">
+        <button id="confirm-cancel" class="btn" autofocus>Keep access</button>
+        <button id="confirm-ok" class="btn btn-danger-text">Revoke access</button>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toasts" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

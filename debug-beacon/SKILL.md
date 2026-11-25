@@ -1,7 +1,7 @@
 ---
 name: debug-beacon
 description: See what code does at runtime when you can't examine its output directly. Run a tiny local HTTP log server, instrument code to post to the server, read logs by querying the server. Use when trying to trace execution of code, debug, examine data flowing through the program, and you don't have direct access to a debugger or more immediate tool.
-allowed-tools: Bash(bun :*), Bash(curl :*), Write, Bash(jq :*), mcp__chrome_devtools__*
+allowed-tools: Bash(bun *), Bash(curl *), Write, Bash(jq *), mcp__chrome-devtools__*
 ---
 
 # Debug by tracing execution
@@ -13,9 +13,11 @@ If you can run the code and read its output, just add prints. You don't need thi
 Run it in the background:
 
 ```bash
-bun run <this skill's directory>/server.ts   # env: PORT=7243, LOG_FILE=/tmp/agent-debug.log, HOST=127.0.0.1
+bun run ${CLAUDE_SKILL_DIR}/server.ts   # env: PORT=7243, LOG_FILE=<os temp dir>/agent-debug.log, HOST=127.0.0.1
 curl -s http://127.0.0.1:7243/health        # OK
 ```
+
+If the server can't listen (a sandbox may block local ports), skip it: have the code append one JSON line per event to a file you can read, and read that file instead.
 
 ## Send logs
 

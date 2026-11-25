@@ -14,7 +14,7 @@ PORT=8080 LOG_FILE=./debug.log bun run server.ts
 | Variable   | Default                | Notes                                                                       |
 | ---------- | ---------------------- | --------------------------------------------------------------------------- |
 | `PORT`     | `7243`                 | Cursor's debug server uses the same port, so don't run both at once.        |
-| `LOG_FILE` | `/tmp/agent-debug.log` | One JSON entry per line. Cleared when the server starts.                    |
+| `LOG_FILE` | `agent-debug.log` in the OS temp dir | One JSON entry per line. Cleared when the server starts. |
 | `HOST`     | `127.0.0.1`            | Set to `0.0.0.0` to take logs from another device, like a phone on your LAN. |
 
 ## Endpoints

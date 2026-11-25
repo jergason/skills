@@ -1,0 +1,15 @@
+[
+  {"query": "draw a diagram of how a request moves through the auth middleware", "should_trigger": true},
+  {"query": "visualize the checkout state machine in src/checkout/machine.ts", "should_trigger": true},
+  {"query": "show me the architecture of this repo as a diagram in the terminal", "should_trigger": true},
+  {"query": "sequence diagram for the OAuth token refresh, between browser, api and auth server", "should_trigger": true},
+  {"query": "make an ER diagram of the tables in schema.sql", "should_trigger": true},
+  {"query": "terminal bar chart of build times for the last 6 CI runs: 4.1, 3.9, 5.2, 4.4, 6.0, 4.2 minutes", "should_trigger": true},
+  {"query": "add a flowchart of the deploy pipeline to the README", "should_trigger": true},
+  {"query": "explain how the retry logic in the http client works", "should_trigger": false},
+  {"query": "fix the mermaid syntax error in docs/flow.md, GitHub won't render it", "should_trigger": false},
+  {"query": "make a slide deck about our Q3 architecture changes", "should_trigger": false},
+  {"query": "plot the latency csv in a jupyter notebook with matplotlib", "should_trigger": false},
+  {"query": "design a state machine for the upload flow, just the types, no diagram", "should_trigger": false},
+  {"query": "build a dashboard page showing signups per week", "should_trigger": false}
+]

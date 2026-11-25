@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invoices</title>
+    <link rel="stylesheet" href="ds/tokens.css" />
+    <link rel="stylesheet" href="ds/components.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page stack">
+      <header>
+        <h1 class="type-title">Invoices</h1>
+        <p class="type-meta">All of your invoices are listed below.</p>
+      </header>
+
+      <section class="card plan">
+        <div class="plan-name">Team plan</div>
+        <div class="plan-detail" id="plan-detail"></div>
+      </section>
+
+      <section class="card">
+        <div class="inv-head">
+          <span></span>
+          <span>Invoice</span>
+          <span>Amount</span>
+          <span></span>
+        </div>
+        <div id="status"></div>
+        <div id="invoices"></div>
+      </section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

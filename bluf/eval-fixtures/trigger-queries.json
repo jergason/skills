@@ -1,0 +1,16 @@
+[
+  {"query": "where are we on the stripe webhook migration? I lost track after lunch", "should_trigger": true},
+  {"query": "write a handoff for tomorrow's on-call about the queue backlog, they won't have seen any of this", "should_trigger": true},
+  {"query": "can you post a status update on PR 1142 so reviewers know what's left?", "should_trigger": true},
+  {"query": "I'm about to clear context. hand this off so a fresh session can pick up the flaky test hunt", "should_trigger": true},
+  {"query": "sitrep on the outage pls, leadership is asking", "should_trigger": true},
+  {"query": "I need to escalate the billing data mismatch to my manager and get a decision on whether to backfill. draft it", "should_trigger": true},
+  {"query": "end of session notes please, I'm picking this back up monday", "should_trigger": true},
+  {"query": "update the incident ticket INC-4471 with where things stand", "should_trigger": true},
+  {"query": "summarize this RFC for me in a paragraph", "should_trigger": false},
+  {"query": "what does the retry wrapper in src/http/retry.ts do?", "should_trigger": false},
+  {"query": "write the PR description for this branch", "should_trigger": false},
+  {"query": "write release notes for v3.2 from the changelog", "should_trigger": false},
+  {"query": "spin up a subagent to find every caller of parseConfig", "should_trigger": false},
+  {"query": "where is the rate limiter configured?", "should_trigger": false}
+]

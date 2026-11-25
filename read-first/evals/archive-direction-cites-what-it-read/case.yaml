@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: archive-direction-cites-what-it-read
+expected_outcome: |
+  The run reads real sources in near, adjacent and far rings before proposing anything, fetching every source it lists. It proposes a handful of directions for wandering a 40-year newspaper archive, each naming the source it borrows from and the specific move it borrows, at least one from a far field. It recommends one direction with a concrete first step.

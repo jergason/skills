@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: chat-ping-stays-short
+expected_outcome: |
+  A one- or two-sentence reply with the current state of the 2.8.0 deploy: the production canary is at 10% and healthy, it's in the 30-minute bake, and promotion to 100% is planned for 15:30 UTC. No headings, no four-part handoff, and no "BLUF" or "SBAR" label. The resolved staging migration hiccup from earlier isn't the lead.
+context:
+  scaffold_script: place-files.sh

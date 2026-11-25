@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: markdown-diagram-keeps-source
+expected_outcome: |
+  docs/ARCHITECTURE.md gets a rendered ASCII diagram of the request flow (web app, API, Postgres, queue, worker, S3) in a code block under the Components section, followed by a collapsed <details> block holding the Mermaid source. The diagram was rendered with render.ts. The rest of the document is unchanged.
+context:
+  scaffold_script: place-files.sh

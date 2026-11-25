@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: handoff-keeps-dead-ends
+expected_outcome: |
+  HANDOFF.md opens with an unlabelled bottom line, then Situation, Background, Assessment and Recommendation. Background keeps both dead ends with how each was ruled out (memory: peak ~410MB of a 1GB limit and no OOMKilled restarts; S3: GET p99 ~80ms during the 502 windows). The keep-alive timeout mismatch (ALB idle 60s vs Node's default 5s keepAliveTimeout in src/server.ts) is in Assessment, marked as untested. The Recommendation names a concrete first step. Nothing says "BLUF" or "SBAR".
+context:
+  scaffold_script: place-files.sh

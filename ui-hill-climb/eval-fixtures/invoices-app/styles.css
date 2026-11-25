@@ -1,0 +1,44 @@
+body { margin: 0; background: var(--color-bg); font-family: var(--font-sans); color: var(--color-text); }
+.page { max-width: 880px; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+
+.plan { display: flex; align-items: baseline; gap: var(--space-3); padding: var(--space-4) var(--space-6); }
+.plan-name { font-size: var(--text-md); font-weight: 700; }
+.plan-detail { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.inv-head {
+  display: grid; grid-template-columns: 24px 1fr 140px 150px; gap: var(--space-3);
+  padding-bottom: var(--space-2); border-bottom: 2px solid var(--color-text);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+.inv-row {
+  display: grid; grid-template-columns: 24px 1fr 140px 150px; gap: var(--space-3);
+  align-items: center; padding: 10px 0;
+}
+.inv-row:nth-child(even) { padding: 16px 0; }
+.inv-row + .inv-row { border-top: 1px solid var(--color-border); }
+
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-paid { background: #16a34a; }
+.status-open { background: #f59e0b; }
+.status-overdue { background: #dc2626; }
+.status-void { background: #a1a1aa; }
+
+.inv-period { font-size: var(--text-md); }
+.inv-meta { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+.inv-amount { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.inv-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); }
+.download {
+  width: 18px; height: 18px; padding: 0; border: none; background: none;
+  font-size: 14px; color: var(--color-text-muted); cursor: pointer;
+}
+
+.oops { color: var(--color-danger); font-weight: 700; }
+
+@media (max-width: 600px) {
+  .inv-head { display: none; }
+  .inv-row { grid-template-columns: 24px 1fr; }
+  .inv-amount, .inv-actions { grid-column: 2; }
+  .inv-meta { display: none; }
+}

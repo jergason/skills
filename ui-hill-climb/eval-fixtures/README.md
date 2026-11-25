@@ -7,7 +7,10 @@ Shared inputs for the cases in `../evals/`. Nothing in the skill reads these; th
 - `settings-app-r2/`, `settings-app-r3/`: the page as round 2 and round 3 judges saw it. `settings-app-r3/` is generated from `settings-app-r2/` by `make-r3.py`; edit r2 and re-run it rather than editing r3 by hand.
 - `scaffold-settings-app.sh`: copies `settings-app/` into the run's directory as a git repo with one commit, then adds an uncommitted change to `marketing/landing.html`. `--round N` lays `settings-app-rN/` over it as uncommitted designer work. `--with-brief` drops `BRIEF.md` at `local/hill-climb/BRIEF.md`. Every case's `place-files.sh` calls it, except the three round-diff-page cases (`builds-round-diff-page`, `round-diff-page-ends-on-final`, `round-diff-page-appends-next-round`).
 - `BRIEF.md`: a deliberately thin brief. It keeps the surfaces, the running-app rules and the constraints, but leaves out the product facts (revoke timing, access duration, what each scope allows) and names no out-of-scope specifics beyond "new features". Runs have to get those from the code and the skill's scoping rules instead of reading answers back.
-- `trigger-queries.json`: 20 should/shouldn't-trigger queries for skill-creator's description optimizer (`scripts.run_loop --eval-set`).
+- `settings-app-polished/`: the Connected apps page after every round 1 fix, inside a settings shell with a nav. Laid over the base page by the over-steering cases. It has no AI design tells, but it does have three lookalikes that "Patterns to avoid" excludes: a 1px `border-left` divider between the nav and the content pane, `•` bullets drawn by CSS for a real list in the revoke dialog, and the admin-typed workspace name "Acme · EU" from `config.js`. It also does several things right that an over-harsh judge might claim are missing: focus on "Keep access", live regions for status and toasts, reduced motion, focus after revoke, escaped app names, and the switch state and duration read from config. Its `ds/components.css` marks the chip icons decorative (`content: "👁" / ""`), so that fix only applies to this overlay. The first version of this page had real flaws a fair panel caught (unescaped names, a hardcoded `checked`, "1 days", emoji read aloud); keep it honest, or the stop case measures the fixture instead of the judges.
+- `polished-round2/`: `local/hill-climb/` for the polished page: its brief, a round 1 synthesis whose fixes the polished page all addresses, round 1 shots (renders of `settings-app-r3/`) and round 2 shots (default, policy off, revoke confirm, phone).
+- `invoices-app/` and `invoices-round0/`: a Billing → Invoices page in the same product and design system (the scaffold copies `settings-app/ds/`), with its brief and round 0 shots. It's a domain the consent-screen notes don't cover. Planted: amounts formatted inconsistently (`$1200`, `$89.5`) and left-aligned in a muted small style; status shown only by a colored dot with a `title`; the dot-joined "INV-1042 · Due Oct 31" line; "Oops! Couldn't fetch invoices :(", "No data." and "Loading..."; a loud uppercase header with a 2px black rule; a column of primary Pay now buttons; an unnamed 18×18 download button; a div grid instead of a table; loose `loading` / `error` booleans that leave the list showing under the error; the meta line removed with `display: none` on phones.
+- `trigger-queries.json`: should/shouldn't-trigger queries for skill-creator's description optimizer (`scripts.run_loop --eval-set`).
 
 ## Planted problems in settings-app
 
@@ -38,8 +41,19 @@ Judge reports mix confident false claims with true but surprising ones, so a run
 - `judge-flags-ai-design-tells`: the visual judge on round 3 with all three tells in place. Graders check the report flags each one as a ranked issue with a replacement, and that none of its own fixes reintroduce a tell.
 - `designer-removes-ai-tells`: the designer on round 3, from a judge report that never mentions the dot joins and suggests adding a left border. File regexes check app.js loses its middle dots and styles.css loses every left border while keeping the facts; `llm` graders check the callout still stands out and the report explains the departure.
 
-The screenshots in the last two cases are real renders of `settings-app/` (round 0), `settings-app-r2/` (their round 1) and `settings-app-r3/` (their round 2) at 1440×1000, served over HTTP because the page loads ES modules.
 - `writes-designer-briefs-by-file-ownership`: every surface lives in the same three files, so splitting designers by surface collides.
+
+The screenshots in `judge-flags-ai-design-tells` and `designer-removes-ai-tells` are real renders of `settings-app/` (round 0), `settings-app-r2/` (their round 1) and `settings-app-r3/` (their round 2) at 1440×1000, served over HTTP because the page loads ES modules.
+
+## Over-steering cases
+
+These check that the skill doesn't push judges into finding problems that aren't there. If one fails, read the judges' issues before blaming the skill: the fixture may have a real flaw worth fixing.
+
+- `judge-skips-tell-lookalikes` (visual judge alone, polished page): the sweep must drop all three lookalikes and not dock the score for them.
+- `panel-stops-on-polished-page` (full panel, polished page): the Apps list should reach 8+ with a stop, quick-polish or one-last-round verdict (across three confirming runs a fair panel gave 8, 8 and 8.5, each time with real, small issues), and no judge should claim the page lacks what it already has.
+- `panel-judges-invoices-page` (full panel, invoices page): the panel catches the planted billing problems and recommends nothing from `references/consent-screens.md`.
+
+The polished and invoices screenshots were rendered with headless Chrome through `playwright-core` at 1440×1000 and 390×844. If you change those pages, re-render the shots so they match the source.
 
 ## Running
 
@@ -50,4 +64,4 @@ The cases use skill-creator's folder format, so either:
 - ask Claude to run them with the skill-creator skill (it reads `evals/<case>/` and grades with subagents), or
 - `claude plugin eval . --scaffold --allow-tools Write,Edit,Bash,Agent,SendMessage` from `ui-hill-climb/`.
 
-Cases tagged `needs-browser` (`round0-brief-on-dirty-repo`, `full-loop-settings-page`) need a browser automation MCP (chrome-devtools or similar) in the run's environment, and you may need to add its tools to `allowed_tools`. `full-loop-settings-page` is the expensive one: a real multi-agent run. Filter by the `no-browser` tag for a cheap pass (eleven cases), the `round-diff-page` tag for the two page-builder cases, or the `ai-design-tells` tag for the two anti-slop cases.
+Cases tagged `needs-browser` (`round0-brief-on-dirty-repo`, `full-loop-settings-page`) need a browser automation MCP (chrome-devtools or similar) in the run's environment, and you may need to add its tools to `allowed_tools`. `full-loop-settings-page` is the expensive one: a real multi-agent run. The two `panel` cases each start five or so judge subagents but no designers. Filter by the `no-browser` tag for a cheap pass (twelve cases), the `round-diff-page` tag for the page-builder cases, the `ai-design-tells` tag for the three anti-slop cases, or the `over-steering` tag for the three cases above.

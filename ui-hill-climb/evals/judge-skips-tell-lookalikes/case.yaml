@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: judge-skips-tell-lookalikes
+expected_outcome: |
+  The visual judge runs the tells sweep on the round 2 page and finds no AI design tells. The page has three lookalikes that "Patterns to avoid" excludes: a 1px border-left divider between the settings nav and the content pane, "•" bullets drawn by CSS for a real list in the revoke dialog, and the admin-typed workspace name "Acme · EU". None is reported as a tell or counted against a score. The page is left unchanged.
+context:
+  scaffold_script: place-files.sh

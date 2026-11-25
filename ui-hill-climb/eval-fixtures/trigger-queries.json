@@ -18,5 +18,7 @@
   {"query": "write a visual explainer page showing how our auth flow works, with a diagram", "should_trigger": false},
   {"query": "grade these three landing page mockups (attached pngs) and tell me which one to go with. no code, just your opinion", "should_trigger": false},
   {"query": "take a screenshot of localhost:3000/settings so I can paste it in slack", "should_trigger": false},
-  {"query": "our Next.js build is failing with a tailwind config error after upgrading to v4, help", "should_trigger": false}
+  {"query": "our Next.js build is failing with a tailwind config error after upgrading to v4, help", "should_trigger": false},
+  {"query": "the gap between the title and the description on the billing card is too big, can you tighten it", "should_trigger": false},
+  {"query": "make the delete button on the API keys page less loud, it's the only red thing on the page", "should_trigger": false}
 ]

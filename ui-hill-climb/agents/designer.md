@@ -25,9 +25,8 @@ Don't edit outside your scope. Don't commit, stash or reset.
 
 - Treat the judges' specifics as suggestions. The bar is the result. When you depart from their advice, say why in your report.
 - Before using a component, prop or token, read its source in the design system to confirm it exists and how it behaves. When the system lacks something small that you need (a size variant, say), extend it the way its existing variants are built, with a story or test if the component has them, rather than hand-rolling a near-copy.
-- Model state explicitly: discriminated unions over optional-prop bags, and explicit loading, failed and ready states over loose booleans.
-- Iterate visually. Open your own browser page in an isolated context named after you, log in, use the brief's viewport, and screenshot after each meaningful change. Read each screenshot and keep refining until you'd show it to Linear's design team. Check the narrow and phone widths too.
-- Avoid the AI design tells in `references/taste.md` ("Patterns to avoid"): never join facts with middle dots or bullets on one line, and never put a coloured left border on a box. Remove them from any component you touch, even if a judge suggested one.
+- Iterate visually. Open your own browser page in an isolated context named after you, log in, use the brief's viewport, and screenshot after each meaningful change. Read each screenshot, and check the narrow and phone widths too. Stop when the ranked fixes for your surfaces are done and the screenshots look right at every width.
+- Follow "Patterns to avoid" in `references/taste.md`. It overrides judge suggestions.
 - Keep accessibility intact: list semantics, labelled controls, names on icon buttons, `role="alert"` on errors, `role="status"` on loaders, focus handling in dialogs.
 - Update the tests that cover your files and run them. Run the project's lint and type checks before you report, or say you skipped them because the orchestrator will run them.
 

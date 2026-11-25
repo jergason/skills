@@ -1,0 +1,15 @@
+[
+  {"query": "I need a name for our new open-source job queue. something better than 'queuey'. go read something first", "should_trigger": true},
+  {"query": "every idea you've given me for the onboarding flow is the same checklist with confetti. get inspired by something and try again", "should_trigger": true},
+  {"query": "pitch me three design directions for a generative music app that changes with the weather", "should_trigger": true},
+  {"query": "we're designing the home screen for a personal knowledge app. I want ideas that don't look like Notion. find some inspiration first", "should_trigger": true},
+  {"query": "brainstorm concepts for an installation piece about urban noise for the gallery show", "should_trigger": true},
+  {"query": "what's a good name for the product we're spinning out of the analytics team? it does anomaly alerts for warehouses", "should_trigger": true},
+  {"query": "explore some unusual architectures for a collaborative canvas sync engine before we commit to CRDTs", "should_trigger": true},
+  {"query": "what should I call this helper that strips trailing slashes from URLs?", "should_trigger": false},
+  {"query": "rename getUserData to something clearer across the codebase", "should_trigger": false},
+  {"query": "fix the off-by-one in the pagination component", "should_trigger": false},
+  {"query": "summarize this paper on CRDTs I pasted", "should_trigger": false},
+  {"query": "what's the difference between a B-tree and an LSM tree?", "should_trigger": false},
+  {"query": "pick between postgres and sqlite for this CLI's local cache, we've already decided on embedded", "should_trigger": false}
+]

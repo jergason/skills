@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: visible-output-skips-beacon
+expected_outcome: |
+  The script's output is right there in the terminal, so the run debugs it directly (reads the code, runs it, maybe adds a print) without starting the debug-beacon server. It finds that the loop stops one item short (`i < items.length - 1`), so the last line item (7.50) is skipped.
+context:
+  scaffold_script: place-files.sh

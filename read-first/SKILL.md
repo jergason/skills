@@ -1,6 +1,6 @@
 ---
 name: read-first
-description: Before picking a direction on open-ended or creative work, go read real books, essays, papers and talks (including ones from far-off fields) and let them seed the ideas. Use when the user wants ideas, a concept, a design direction, a name, an architecture to explore, a generative or artistic piece, or says "go read something first", "get inspired", "find inspiration", "what would X do", or complains that the ideas are boring, obvious, or samey.
+description: Before picking a direction on open-ended or creative work, read real books, essays, papers and talks, including some from far-off fields, and let them seed the ideas. Use when the user wants ideas, a concept, a design direction, a product or project name (not names in code), an architecture to explore, or a generative or artistic piece, or says "go read something first" or "get inspired", or complains that the ideas are boring, obvious, or samey.
 argument-hint: "What are we deciding?"
 ---
 
@@ -18,17 +18,17 @@ Then name the problem's _shape_ in a domain-free way. "A UI for browsing a huge 
 
 ## 2. Build a reading list
 
-Aim for 8 to 12 sources, in three rings:
+Read in three rings, with the most weight on the far one. A few sources per ring is usually enough. Size the list to the decision: a feature name needs less reading than a product's whole direction.
 
-- **Near** (2 to 3): the home field. The best prior work, the classic essay, the paper everyone cites.
-- **Adjacent** (3 to 4): neighboring fields that solve a similar problem. Typography for a data viz problem. Game design for an onboarding flow. Architecture for an info hierarchy.
-- **Far** (3 to 5): fields with the same shape and nothing else in common. Math, music theory, biology, fiction, cartography, liturgy, textile craft, urban planning. This ring is where the interesting ideas come from, so don't skip it.
+- **Near**: the home field. The best prior work, the classic essay, the paper everyone cites.
+- **Adjacent**: neighboring fields that solve a similar problem. Typography for a data viz problem. Game design for an onboarding flow. Architecture for an info hierarchy.
+- **Far**: fields with the same shape and nothing else in common. Math, music theory, biology, fiction, cartography, liturgy, textile craft, urban planning. This ring is where the interesting ideas come from, so don't skip it.
 
 Prefer primary sources: papers, essays, book chapters, talks, artist statements, design docs, old manuals. Avoid listicles, SEO blogs, and "top 10 tips" content. Weird is good.
 
 ## 3. Actually read them
 
-Open each source and read real content, not just the title or abstract. If a source won't load, swap it for another one rather than pretending.
+Open each source and read real content, not just the title or abstract. If a source won't load, swap it for another one.
 
 If the list is long, you can split the reading across a few subagents, each taking one ring. Give each the problem shape and ask for notes in the format below.
 
@@ -46,7 +46,7 @@ Only list things you actually opened.
 
 ## 4. Cross-pollinate
 
-Now generate 4 to 6 directions. Each one has to come from the reading:
+Now generate a handful of directions, enough to show real range. Each one has to come from the reading:
 
 - Name it.
 - Say which source (or pair of sources) it borrows from, and what exactly it borrows.
@@ -54,7 +54,7 @@ Now generate 4 to 6 directions. Each one has to come from the reading:
 
 The best directions usually combine a near source with a far one. If every direction traces back to the near ring, go back to step 2 and push further out.
 
-Include at least one direction that feels too weird. It's often the one worth half-keeping.
+Consider including one direction that feels too weird. It's often the one worth half-keeping.
 
 ## 5. Recommend
 

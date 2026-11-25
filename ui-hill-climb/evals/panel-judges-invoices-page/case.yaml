@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: panel-judges-invoices-page
+expected_outcome: |
+  The orchestrator runs the judge panel and synthesizer on a billing page, a different domain from the connected-apps fixtures. The ranked fixes catch the planted problems (inconsistent, left-aligned amounts; status shown only by a colored dot; the dot-joined "INV-1042 · Due Oct 31" line; "Oops" and "No data." copy) and recommend nothing from the permission and consent screen notes. Nothing is edited.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,14 @@
+[
+  {"query": "the cart total is wrong in the browser but I can't see the console from here. can you trace what the reducer is getting?", "should_trigger": true},
+  {"query": "our background worker silently drops some jobs. it runs detached and logs go nowhere. figure out what it's actually receiving", "should_trigger": true},
+  {"query": "the electron renderer crashes on save and I can't get devtools open on that window. instrument it and see what's happening", "should_trigger": true},
+  {"query": "I'm clicking through the signup flow on my phone and the form resets after step 2. can you see what state it has when that happens?", "should_trigger": true},
+  {"query": "the CLI spawns a child process that hangs sometimes. its stdout is piped to /dev/null. trace where it stops", "should_trigger": true},
+  {"query": "the server logs are way too noisy to find anything. add some targeted tracing so we can see what the webhook handler gets", "should_trigger": true},
+  {"query": "this python script prints the wrong average, here's the output. why?", "should_trigger": false},
+  {"query": "the unit test for parseDate fails with expected 3 got 2, fix it", "should_trigger": false},
+  {"query": "set up OpenTelemetry tracing for our production services", "should_trigger": false},
+  {"query": "add structured logging with pino to the API", "should_trigger": false},
+  {"query": "explain what this stack trace means", "should_trigger": false},
+  {"query": "profile why the build is slow", "should_trigger": false}
+]

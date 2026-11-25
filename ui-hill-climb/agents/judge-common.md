@@ -26,7 +26,7 @@ Be calibrated and hard to impress. Half points are fine. In later rounds, keep y
 ## Output
 
 1. **Score table**: surface | score (show the history, like `5 → 7.5 → 8.5`, from round 1 on) | one-line verdict.
-2. **Issues, ranked by impact.** For each: what's wrong, where (screenshot and rough location, or file and line), and a concrete fix buildable in the project's design system (name the component, variant, token or prop). Flag regressions first. Never suggest a fix that joins facts with middle dots on one line or adds a coloured left border to a box (see "Patterns to avoid" in `references/taste.md`); copy you propose follows the same rule.
+2. **Issues, ranked by impact.** For each: what's wrong, where (screenshot and rough location, or file and line), and a concrete fix buildable in the project's design system (name the component, variant, token or prop). Flag regressions first. Your fixes and any copy you propose follow "Patterns to avoid" in `references/taste.md`.
 3. **Rulings on departures.** When the orchestrator lists places where designers departed from earlier advice, say whether each departure was right and why.
 4. **Stop or continue, per surface**, with what specifically stands between it and 9+. If what remains is out of scope, say so plainly.
 

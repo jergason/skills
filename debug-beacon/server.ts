@@ -2,10 +2,12 @@
 // Tiny log collector for agent debugging. Instrumented code POSTs JSON objects
 // to /log and the agent reads them back from /logs.
 import { appendFile, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 const PORT = Number(process.env.PORT ?? 7243);
 const HOST = process.env.HOST ?? "127.0.0.1";
-const LOG_FILE = process.env.LOG_FILE ?? "/tmp/agent-debug.log";
+const LOG_FILE = process.env.LOG_FILE ?? join(tmpdir(), "agent-debug.log");
 
 // Browser code on any origin needs to be able to post here.
 const cors = {
@@ -45,14 +47,22 @@ const routes: Record<string, (req: Request) => Response | Promise<Response>> = {
 
 await writeFile(LOG_FILE, "");
 
-Bun.serve({
-  hostname: HOST,
-  port: PORT,
-  fetch: (req) => {
-    if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    const route = routes[`${req.method} ${new URL(req.url).pathname}`];
-    return route ? route(req) : text("Not Found", 404);
-  },
-});
+try {
+  Bun.serve({
+    hostname: HOST,
+    port: PORT,
+    fetch: (req) => {
+      if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+      const route = routes[`${req.method} ${new URL(req.url).pathname}`];
+      return route ? route(req) : text("Not Found", 404);
+    },
+  });
+} catch (err) {
+  // Bun reports every bind failure as "port in use", including a sandbox refusing to bind.
+  const code = (err as { code?: string }).code ?? "unknown";
+  console.error(`Couldn't listen on ${HOST}:${PORT} (${code}): ${(err as Error).message}`);
+  console.error("If nothing else holds the port, a sandbox may be blocking local servers. Log to a file instead.");
+  process.exit(1);
+}
 
 console.log(`Agent debug log server on http://${HOST}:${PORT}, writing to ${LOG_FILE}`);

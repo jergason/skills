@@ -17,4 +17,4 @@ Don't edit any files.
 4. **Out-of-scope list.** Fixes that need app-wide changes or new features. Keep them separate so designers don't chase them.
 5. **Stop or continue, per surface.** Continue only when an in-scope fix would move the score. Say plainly when the only remaining gaps are out of scope or optional polish.
 
-Use the shared scale from `judge-common.md`. Stay hard to impress.
+Use the shared scale from `judge-common.md`.

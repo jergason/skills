@@ -7,13 +7,20 @@ interface Options {
   paddingY: number;
 }
 
-function parseArgs(args: string[]): { diagram: string; options: Options } {
+interface ParsedArgs {
+  diagram: string;
+  file: string;
+  options: Options;
+}
+
+function parseArgs(args: string[]): ParsedArgs {
   const options: Options = {
     paddingX: 5,
     paddingY: 5,
   };
 
   let diagram = "";
+  let file = "";
   let i = 0;
 
   while (i < args.length) {
@@ -25,6 +32,9 @@ function parseArgs(args: string[]): { diagram: string; options: Options } {
     } else if (arg === "--padding-y" && args[i + 1]) {
       options.paddingY = parseInt(args[i + 1], 10);
       i += 2;
+    } else if (arg === "--file" && args[i + 1]) {
+      file = args[i + 1];
+      i += 2;
     } else if (!arg.startsWith("--")) {
       diagram = arg;
       i++;
@@ -33,7 +43,7 @@ function parseArgs(args: string[]): { diagram: string; options: Options } {
     }
   }
 
-  return { diagram, options };
+  return { diagram, file, options };
 }
 
 async function readStdin(): Promise<string> {
@@ -46,9 +56,17 @@ async function readStdin(): Promise<string> {
 
 async function main() {
   const args = process.argv.slice(2);
-  let { diagram, options } = parseArgs(args);
+  let { diagram, file, options } = parseArgs(args);
 
-  // if no diagram arg, try stdin
+  if (file) {
+    if (!(await Bun.file(file).exists())) {
+      console.error(`render error: no such file: ${file}`);
+      process.exit(1);
+    }
+    diagram = (await Bun.file(file).text()).trim();
+  }
+
+  // if no diagram arg or file, try stdin
   if (!diagram) {
     const isTTY = process.stdin.isTTY;
     if (!isTTY) {
@@ -57,8 +75,9 @@ async function main() {
   }
 
   if (!diagram) {
-    console.error("usage: bun run render.ts <mermaid-diagram>");
-    console.error('       echo "graph LR; A --> B" | bun run render.ts');
+    console.error("usage: bun run render.ts --file diagram.mmd");
+    console.error("       bun run render.ts < diagram.mmd");
+    console.error("Put each statement on its own line, not separated by semicolons.");
     process.exit(1);
   }
 

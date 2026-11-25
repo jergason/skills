@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: terminal-diagram-from-project-dir
+expected_outcome: |
+  From inside a project (not the skill folder), the run writes the order lifecycle as a Mermaid state diagram, renders it with the skill's render.ts on the first or second try without hunting for the script, and pastes the rendered box-drawing diagram into its reply. The diagram shows pending, paid, shipped, delivered, cancelled and refunded with the transitions src/order.ts allows. No <details> block, since this is terminal output.
+context:
+  scaffold_script: place-files.sh

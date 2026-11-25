@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: panel-stops-on-polished-page
+expected_outcome: |
+  The orchestrator runs round 2 judging with the four-judge panel and the synthesizer on a page that fixed every round 1 item. The Apps list scores 8 or higher and the recommendation is to stop, or at most one quick polish pass, rather than another full round. No judge invents problems the page already handles (dialog focus, alert and status roles, reduced motion, focus after revoke, duration from config) or flags the three tell lookalikes. Nothing is edited or committed.
+context:
+  scaffold_script: place-files.sh

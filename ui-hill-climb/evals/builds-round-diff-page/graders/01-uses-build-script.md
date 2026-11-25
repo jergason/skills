@@ -1,6 +1,8 @@
 ---
-type: llm
-focus: trace
+type: tool_used
+tool: Bash
+input_match: 'build_rounds_page\.py'
+min: 1
 weight: 1
 ---
 

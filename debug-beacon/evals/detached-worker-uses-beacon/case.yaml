@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: detached-worker-uses-beacon
+expected_outcome: |
+  The worker runs detached over IPC with its output discarded, so prints can't be seen. The run tries the debug-beacon server first. The eval sandbox blocks local ports, so it falls back to logging to a file, as the skill says, and shows what the worker received from a real run. It finds that `job.since` arrives as an ISO string (IPC serializes the Date to JSON), so `new Date(o.createdAt) > job.since` compares against NaN and drops every order. It fixes the worker, leaves export.js's detached launch alone, removes every agent-debug call, and says what happened to the server.
+context:
+  scaffold_script: place-files.sh

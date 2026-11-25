@@ -1,6 +1,6 @@
 ---
 name: ui-hill-climb
-description: Iteratively raise the design quality of an existing UI by rounds of screenshots, a panel of specialist judge subagents scoring 0-10 on separate criteria (visual craft, copy, interaction and states, accessibility and responsive), and designer subagents that implement fixes inside the project's design system, until the scores plateau or reach 9+. Use this whenever someone asks to polish, refine, level up, or "make excellent" a screen, page, flow or component; to review and improve typography, spacing, hierarchy or copy; to get UI "to Linear/Stripe quality"; to rate a UI with judges; or to iterate on design with screenshots, even if they don't say "hill-climb".
+description: Raise the design quality of an existing, runnable UI in rounds of screenshots, a panel of judge subagents scoring 0-10 (visual craft, copy, interaction and states, accessibility and responsive), and designer subagents that fix what the judges find inside the project's design system, until scores plateau or reach 9+. Use when someone asks to polish, level up or "make excellent" a screen, page, flow or component, to get a UI to Linear or Stripe quality, to rate a UI with judges, or to iterate on design with screenshots.
 ---
 
 # UI hill-climb
@@ -72,19 +72,9 @@ Spawn the judge panel in parallel, one subagent per criterion. Each judge reads 
 
 Then run the synthesizer (`agents/judge-synthesizer.md`). It merges the four reports into one score table per surface, removes duplicates, resolves conflicts between judges, and ranks fixes by impact. The synthesizer's table is the score of record.
 
+Judges score 0 to 10 on the shared scale in `agents/judge-common.md`, where 9 means excellent with only optional polish or out-of-scope gaps left.
+
 **Keep the same judges across rounds.** Resume each one (SendMessage to its name or id) instead of spawning a fresh one, so its scale stays calibrated against what it scored before. A fresh judge re-anchors and the numbers stop being comparable.
-
-All judges share this scale:
-
-| Score | Meaning                                                        |
-| ----- | -------------------------------------------------------------- |
-| 10    | Ships at the level of Linear, Stripe or Things without changes |
-| 9     | Excellent; only optional polish or out-of-scope gaps remain    |
-| 7     | Solid and professional, but unremarkable                       |
-| 5     | Functional, with clear craft problems                          |
-| 3     | Confusing or visibly broken                                    |
-
-Tell judges to be hard to impress. Inflated early scores leave nowhere to climb.
 
 ### 2. Correct the judges
 
@@ -106,7 +96,7 @@ Spawn designer subagents with `agents/designer.md`. Split the work by **file own
 - Shared server files are the riskiest. If two designers must touch one, tell both to make small read-modify-write edits and re-read before each edit.
 - Shared **app state** collides too. If one designer toggles a global setting to capture a state, the other's screenshots catch it. Name one designer as the only one allowed to change shared state, and make them restore it immediately.
 
-Designers verify visually in their own isolated browser context, iterate until they'd show it to a top design team, update tests, run the project's checks for the files they touched, and report: what changed and why (design reasoning), where they departed from the judges and why, check results, screenshot paths.
+Designers verify visually in their own isolated browser context, update tests, run the project's checks for the files they touched, and report: what changed and why (design reasoning), where they departed from the judges and why, check results, screenshot paths. They stop when the ranked fixes for their surfaces are done and the screenshots look right at every width they checked.
 
 From round 2 on, keep using the same designers (SendMessage) so they keep their context.
 
@@ -148,17 +138,14 @@ The person wants to see what changed, so show it. Build one page that holds:
 
 Update the page after every judging round, not just at the end. Show scores as "Judging…" while a round is out, then fill them in.
 
-## Principles and references
+## Taste and AI design tells
 
 `references/taste.md` lists the designers, products and principles the judges and designers calibrate against, with what to take from each. Point every judge and designer at it. A judge that has a concrete reference ("the row hierarchy Linear uses in its issue list") gives far better critique than one told to "make it look good".
 
-**No AI design tells.** Two patterns read as AI-generated UI, and nothing this skill produces may add them: facts joined with middle dots or bullets on one line ("v14 · Published · Oct 2"), and coloured left-border stripes on boxes. Judges find them with a source sweep and flag each one as an issue (`agents/judge-visual.md`), a surface that still has one can't score 9+, and designers remove them from any component they touch, even when a judge suggests one. `references/taste.md` ("Patterns to avoid") has the replacements.
+Nothing this skill produces may add the AI design tells in `references/taste.md` ("Patterns to avoid"). The visual judge sweeps for them every round, the synthesizer caps scores on them, and any polish pass you do yourself follows the same rule.
 
-**Playing one role yourself.** When the person asks you to act as one judge, the synthesizer or a designer directly, rather than to run the loop, read that role's file in `agents/` first, plus `agents/judge-common.md` for any judge and `references/taste.md`, and follow them exactly as a subagent would. Their required steps (the visual judge's tells sweep, the designer's report) apply to you.
+To play one role directly instead of running the loop (one judge, the synthesizer or a designer), read its file in `agents/`, plus `agents/judge-common.md` for a judge and `references/taste.md`, and follow it as that subagent would, including its required steps.
 
-## Reporting faithfully
+## Final report
 
-- Say what you checked and what you didn't. If a designer skipped something, say so.
-- Report check failures with the output, not a summary.
-- Size the impact of each change honestly. Overstating ("the API changed shape") alarms people as much as understating hides risk.
-- Don't commit unless asked. List every file outside the main surfaces that changed (design-system components, shared layouts, server contracts), since those usually belong in separate PRs.
+Give the score table and the biggest changes. List every changed file outside the main surfaces (design-system components, shared layouts, server contracts), since those usually belong in separate PRs. Don't commit unless asked.
