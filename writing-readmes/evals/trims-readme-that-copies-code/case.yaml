@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: trims-readme-that-copies-code
+expected_outcome: |
+  src/notifier/README.md no longer copies code: the defineChannel example, the list of rejected channels and the channel table are gone or replaced with pointers to files such as channels/email.ts and channels/index.ts. The overview's concepts and rules (field-by-field payloads, why a rate limit is required) are not restated; the README links to docs/Notifier.md instead. The failed-delivery log query stays and filters on 'deliver() finished', the message send.ts actually logs. The SMS batch-endpoint reason stays. The History and Conclusion sections and the marketing filler are gone. The final message tells the user which claims were wrong, including the drifted example and the SMS attempt count (the README said 3; sms.ts says 5).
+context:
+  scaffold_script: place-files.sh

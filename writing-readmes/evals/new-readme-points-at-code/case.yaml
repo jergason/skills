@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: new-readme-points-at-code
+expected_outcome: |
+  src/jobs/README.md exists and is short (under 60 lines). It lists the steps to add a job: write it with defineJob in src/jobs/, add it to the list in src/jobs/index.ts, and add its cron expression to src/jobs/schedules.ts, noting that src/jobs/index.test.ts fails if the schedule is missing. It says jobs must be safe to run twice, because the worker reruns a job that was running during a deploy (docs/Architecture.md). It points at an existing job file such as purgeExpiredSessions.ts as the example instead of pasting code, and doesn't copy constant values such as the 30-second default timeout or the attempt limit. It may include the log message 'runJob() failed' as a recipe for finding failures.
+context:
+  scaffold_script: place-files.sh

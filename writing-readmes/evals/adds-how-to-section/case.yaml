@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: adds-how-to-section
+expected_outcome: |
+  src/webhooks/README.md gains a section on adding a provider. It points at an existing provider file (providers/github.ts or providers/stripe.ts) as the example instead of pasting a provider's code. Its steps are: write the provider with defineProvider in providers/, add it to the list in providers/index.ts, and add its secret's environment variable to .env.example, noting that providers/index.test.ts fails without that entry. The existing sections (signature verification and the replay recipe) keep their meaning. The section describes the general steps, not a Shopify implementation.
+context:
+  scaffold_script: place-files.sh
