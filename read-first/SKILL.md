@@ -6,7 +6,7 @@ argument-hint: "What are we deciding?"
 
 # Read first, then decide
 
-Ideas that come straight out of your head tend to be the average of everything you've seen. That's the boring answer. The fix is old and simple: before choosing a direction, go read some real things and steal from them on purpose.
+Ideas that come straight out of a prompt tend to be the average of your weights. That's boring. Instead, before choosing a direction, read some real things and steal from the best ones.
 
 The goal isn't a literature review. It's to load a few specific, strange, concrete ideas into context so the directions you propose have a pedigree.
 
@@ -14,7 +14,7 @@ The goal isn't a literature review. It's to load a few specific, strange, concre
 
 Write one or two sentences: what's being decided, and what the constraints are (medium, audience, tech, time). Keep it short. If the user gave you enough, don't ask.
 
-Then name the problem's *shape* in a domain-free way. "A UI for browsing a huge archive" is also "how do you make a vast space feel walkable." "A synth patch that evolves" is also "a system that changes slowly without repeating." The shape is what lets you find useful sources outside the obvious field.
+Then name the problem's _shape_ in a domain-free way. "A UI for browsing a huge archive" is also "how do you make a vast space feel walkable." "A synth patch that evolves" is also "a system that changes slowly without repeating." The shape is what lets you find useful sources outside the obvious field.
 
 ## 2. Build a reading list
 
@@ -24,11 +24,11 @@ Aim for 8 to 12 sources, in three rings:
 - **Adjacent** (3 to 4): neighboring fields that solve a similar problem. Typography for a data viz problem. Game design for an onboarding flow. Architecture for an info hierarchy.
 - **Far** (3 to 5): fields with the same shape and nothing else in common. Math, music theory, biology, fiction, cartography, liturgy, textile craft, urban planning. This ring is where the interesting ideas come from, so don't skip it.
 
-Prefer primary sources: papers, essays, book chapters, talks, artist statements, design docs, old manuals. Avoid listicles, SEO blogs, and "top 10 tips" content. Older is often better. Weird is good.
+Prefer primary sources: papers, essays, book chapters, talks, artist statements, design docs, old manuals. Avoid listicles, SEO blogs, and "top 10 tips" content. Weird is good.
 
 ## 3. Actually read them
 
-Use web search and fetch to open each source and read real content, not just the title or abstract. If a source won't load, swap it for another one rather than pretending.
+Open each source and read real content, not just the title or abstract. If a source won't load, swap it for another one rather than pretending.
 
 If the list is long, you can split the reading across a few subagents, each taking one ring. Give each the problem shape and ask for notes in the format below.
 
@@ -42,7 +42,7 @@ For each source, write a short note:
 - Quote (optional, under 15 words): the line that made it click.
 ```
 
-Only list things you actually opened. Never invent a source, an author, or a quote. A reading list with a fake entry is worse than a short one.
+Only list things you actually opened.
 
 ## 4. Cross-pollinate
 
@@ -69,7 +69,6 @@ Keep the notes tight. The user should be able to skim the list, click the two th
 
 ## Things that go wrong
 
-- **Only reading the top search results.** You get the same sources everyone else got, and the same ideas. Search with the problem *shape*, and with far-field terms.
+- **Only reading the top search results.** You get the same sources everyone else got, and the same ideas. Search with the problem _shape_, and with far-field terms.
 - **Picking sources that confirm the obvious plan.** If you already know the answer, reading is just decoration. Read before deciding, not after.
-- **Name-dropping.** A source that doesn't change any direction didn't earn its spot. Cut it.
 - **Vibes-only borrowing.** "Inspired by Borges" means nothing. "Borrows the encyclopedia-that-rewrites-the-world structure from Tlön: each saved search quietly reshapes the default view" means something.

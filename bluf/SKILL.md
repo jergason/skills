@@ -1,28 +1,28 @@
 ---
-name: handoff
-description: Write handoffs and status updates in BLUF and SBAR form so the next reader (a person, a subagent, a fresh session, or you after a context reset) can act without re-reading the history. Use whenever work changes hands or someone needs to know where things stand, including "write a handoff", "hand this off", "brief the next agent", "status update", "where are we", "sitrep", "summarize for the on-call", end-of-shift or end-of-session notes, escalations, incident updates, PR or ticket status comments, and briefs passed to a subagent or a new session, even if the user doesn't say BLUF or SBAR.
+name: bluf
+description: Write handoffs and status updates in BLUF (Bottom Line Up Front) and SBAR form so the next reader (a person, a subagent, a fresh session, or you after a context reset) can act without re-reading the history. Use whenever work changes hands or someone needs to know where things stand, including "write a handoff", "hand this off", "brief the next agent", "status update", "where are we", "sitrep", "summarize for the on-call", end-of-shift or end-of-session notes, escalations, incident updates, PR or ticket status comments, and briefs passed to a subagent or a new session, even if the user doesn't say BLUF or SBAR.
 argument-hint: "Who is this for, and what should they do next?"
 ---
 
-# Handoffs: BLUF and SBAR
+# BLUF (Bottom Line Up Front) and SBAR handoffs
 
 A handoff exists so the reader can act. It fails when the reader has to dig through it to find what's going on, or has to go back and redo your investigation because you left out what you checked.
 
-Two formats help. Both come from fields where a bad handoff can get someone hurt:
+Two formats help:
 
 - **BLUF** (Bottom Line Up Front), from US military writing. The conclusion and the ask go in the first sentence or two. Everything after supports it. Use it for status updates and anything the reader may only skim.
 - **SBAR** (Situation, Background, Assessment, Recommendation), from hospital shift changes and escalations. It splits what you saw from what you think it means from what you want done. Use it when someone takes over a problem, or when you need a decision.
 
-They fit together: the first line of an SBAR is a BLUF.
+They fit together. The first line of an SBAR is a BLUF.
 
 ## Pick the format
 
-| The reader needs to | Use |
-|---|---|
-| Know where things stand, maybe skim and move on | BLUF |
-| Take over the work and keep going | SBAR |
-| Make a decision or approve something | SBAR, with the ask in the BLUF line |
-| Get pinged about one thing in chat | BLUF, one or two sentences, no headings |
+| The reader needs to                             | Use                                     |
+| ----------------------------------------------- | --------------------------------------- |
+| Know where things stand, maybe skim and move on | BLUF                                    |
+| Take over the work and keep going               | SBAR                                    |
+| Make a decision or approve something            | SBAR, with the ask in the BLUF line     |
+| Get pinged about one thing in chat              | BLUF, one or two sentences, no headings |
 
 When unsure, use SBAR. A short SBAR still reads fine as a status update. A BLUF that should have been an SBAR leaves the next person guessing.
 
@@ -49,7 +49,6 @@ Rules:
 - The first sentence must work alone. If the reader stops there, they should still know the state and whether they need to do anything.
 - Lead with the current state, not the story of how you found it. "Deploy is blocked on a failing migration; I need DB admin access to fix it" beats "I started by looking at the deploy logs."
 - If nothing is needed from the reader, say so: "No action needed."
-- Put dates and times in absolute form (2026-11-18 14:05 UTC), not "earlier" or "yesterday."
 
 ## SBAR
 
@@ -125,10 +124,11 @@ When the reader is a subagent, a new session, or yourself after a context reset:
 > **Assessment:** Likely: `logout.spec.ts` revokes the token stored in the module-level `session` fixture, and `auth.spec.ts` reuses it. Evidence: running the two files together with `--sequence.shuffle=false` fails every time. Not checked: whether other specs share the fixture.
 >
 > **Recommendation:**
+>
 > 1. Change `test/fixtures/session.ts` to build a fresh session per test instead of exporting a singleton.
 > 2. Run `pnpm vitest auth.spec.ts logout.spec.ts --sequence.shuffle=false` 20 times. Done means 20/20 passes.
 > 3. Grep for other imports of `session` from the fixture and check whether they relied on shared state.
-> Don't touch `src/auth/`. The product code isn't the problem.
+>    Don't touch `src/auth/`. The product code isn't the problem.
 
 ### SBAR escalation asking for a decision
 
